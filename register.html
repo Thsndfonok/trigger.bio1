@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Your Trigger Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #111 0%, #222 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .auth-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem 3rem;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 480px;
+    }
+    .auth-card h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .auth-card button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      border: none;
+      background-color: #5865f2;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .auth-card button:hover {
+      background-color: #4752c4;
+    }
+    .note {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-card">
+    <h2>Connect with Discord</h2>
+    <button onclick="loginWithDiscord()">Login with Discord</button>
+    <p class="note">We only use your profile to personalize your page.</p>
+  </div>
+
+  <script>
+    function loginWithDiscord() {
+      const clientId = '1387378338498220113';
+      const redirectUri = encodeURIComponent('https://discord.gg/qwPw29Kk');
+      const scope = encodeURIComponent('identify email');
+      const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=1387378338498220113&redirect_uri=https%3A%2F%2Flively-sun-7a00.fadmivan.workers.dev%2Fcallback&response_type=code&scope=identify`;
+      window.location.href = discordAuthUrl;
+    }
+    res.redirect(`/index2.html?username=${encodeURIComponent(userInfo.data.username + '#' + userInfo.data.discriminator)}`);
+
+  </script>
+</body>
+</html>

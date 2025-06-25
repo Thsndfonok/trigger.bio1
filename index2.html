@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>THSND Profil</title>
+<style>
+  body {
+    background: #121212;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  #loginBtn {
+    background: #7289da;
+    border: none;
+    padding: 1rem 2rem;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+
+  #profile {
+    display: none;
+    text-align: center;
+    max-width: 400px;
+    background: rgba(30, 30, 30, 0.7);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #1db954;
+  }
+
+  #discordNameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Státusz pötty */
+  .status-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .status-online {
+    background: #43b581; /* zöld */
+    box-shadow: 0 0 6px #43b581;
+  }
+  .status-offline {
+    background: #747f8d; /* szürke */
+    box-shadow: 0 0 6px #747f8d;
+  }
+
+  #discordAvatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 1rem auto;
+    border: 3px solid #43b581;
+    object-fit: cover;
+  }
+
+  /* Ikonok */
+  #icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem 0;
+  }
+  .icon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 3px #1db954);
+  }
+
+  /* Animált szöveg */
+  #animatedText {
+    font-family: 'Georgia', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(90deg, #fff, #1db954, #fff);
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: shine 3s linear infinite;
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* Profilkép feltöltés */
+  #uploadLabel {
+    display: inline-block;
+    background: #1db954;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  #uploadInput {
+    display: none;
+  }
+  #uploadPreview {
+    margin-top: 1rem;
+    max-width: 150px;
+    border-radius: 50%;
+    border: 3px solid #1db954;
+  }
+
+  /* Videó és zene feltöltés */
+  #mediaSection {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  #bgVideo, #bgMusic {
+    margin-top: 0.5rem;
+    max-width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+
+<button id="loginBtn">Bejelentkezés Discorddal</button>
+
+<div id="profile">
+  <div id="discordNameContainer">
+    <span id="statusDot" class="status-dot status-online"></span>
+    <div id="discordName">Felhasználónév#1234</div>
+  </div>
+  <img id="discordAvatar" src="" alt="Discord Avatar" />
+
+  <div id="icons">
+    <img src="https://img.icons8.com/ios-filled/50/1db954/code.png" alt="Fejlesztő" class="icon" title="Fejlesztő" />
+    <img src="https://img.icons8.com/ios-filled/50/1db954/design.png" alt="Designer" class="icon" title="Designer" />
+  </div>
+
+  <div id="animatedText">money is everything</div>
+
+  <label id="uploadLabel" for="uploadInput">Profilkép feltöltése</label>
+  <input type="file" id="uploadInput" accept="image/*" />
+
+  <img id="uploadPreview" src="" alt="Profilkép előnézet" style="display:none;" />
+
+  <div id="mediaSection">
+    <label for="videoUpload">Háttérvideó feltöltése:</label>
+    <input type="file" id="videoUpload" accept="video/*" />
+    <video id="bgVideo" autoplay muted loop></video>
+
+    <label for="audioUpload">Zene feltöltése:</label>
+    <input type="file" id="audioUpload" accept="audio/*" />
+    <audio id="bgMusic" controls loop></audio>
+  </div>
+</div>
+
+<script>
+  const loginBtn = document.getElementById('loginBtn');
+  const profile = document.getElementById('profile');
+  const discordName = document.getElementById('discordName');
+  const statusDot = document.getElementById('statusDot');
+  const discordAvatar = document.getElementById('discordAvatar');
+
+  loginBtn.addEventListener('click', () => {
+    // Itt irányítsd a Discord OAuth URL-re a usert
+    const clientId = 'YOUR_CLIENT_ID';
+    const redirectUri = encodeURIComponent('https://lively-sun-7a00.fadmivan.workers.dev//callback');
+    const scope = 'identify';
+    const oauthUrl = `https://discord.com/oauth2/authorize?client_id=1387378338498220113&redirect_uri=https%3A%2F%2Flively-sun-7a00.fadmivan.workers.dev%2Fcallback&response_type=code&scope=identify`;
+    window.location.href = oauthUrl;
+  });
+
+  // A callback URL-n átjött "code"-ot lekezelheted backenddel (pl. fetch), majd a user adatait visszaküldöd a frontnak.
+
+  // Demo: Kép feltöltés preview
+  const uploadInput = document.getElementById('uploadInput');
+  const uploadPreview = document.getElementById('uploadPreview');
+
+  uploadInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    uploadPreview.src = url;
+    uploadPreview.style.display = 'block';
+  });
+
+  // Demo: Videó feltöltés preview
+  const videoUpload = document.getElementById('videoUpload');
+  const bgVideo = document.getElementById('bgVideo');
+
+  videoUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    bgVideo.src = url;
+  });
+
+  // Demo: Zene feltöltés preview
+  const audioUpload = document.getElementById('audioUpload');
+  const bgMusic = document.getElementById('bgMusic');
+
+  audioUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    bgMusic.src = url;
+  });
+
+  // TODO: backend kapcsolat után profile megjelenítés
+  // Demo célból megjelenítjük a profilt
+  // Simuláld a bejelentkezett usert:
+  /*
+  profile.style.display = 'block';
+  discordName.textContent = 'laz1tohagymafej#0123';
+  statusDot.classList.remove('status-online');
+  statusDot.classList.add('status-offline');
+  discordAvatar.src = 'https://cdn.discordapp.com/avatars/USERID/AVATAR_HASH.png';
+  */
+</script>
+
+</body>
+</html>
