@@ -40,7 +40,7 @@ form.addEventListener('submit', (e) => {
   // pl. fetch('/api/register', { method: 'POST', body: JSON.stringify(...)})
 
   // Átirányítás a dashboardra
-  window.location.href = '/dashboard.html';  // vagy /dashboard, ami neked van
+  window.location.href = 'dashboard.html';  // vagy /dashboard, ami neked van
 
   form.reset();
 });
