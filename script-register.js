@@ -36,11 +36,7 @@ form.addEventListener('submit', (e) => {
   errorBox.innerHTML = '';
   alert('Registration successful!');
 
-  // Itt mehet a backend POST kérés
-  // pl. fetch('/api/register', { method: 'POST', body: JSON.stringify(...)})
-
-  // Átirányítás a dashboardra
-  window.location.href = 'dashboard.html';  // vagy /dashboard, ami neked van
-
   form.reset();
+
+  window.location.href = 'dashboard.html';  // átirányítás a dashboardra
 });
