@@ -1,141 +1,56 @@
-:root {
-  --bg: #f8fafc;
-  --text: #1e293b;
-  --card: white;
-  --input-bg: #e2e8f0;
-  --input-focus: white;
-  --primary: #4f46e5;
-  --shadow: rgba(0, 0, 0, 0.1);
-}
+// script-register.js
 
-body.dark {
-  --bg: #0f172a;
-  --text: #f1f5f9;
-  --card: #1e293b;
-  --input-bg: #334155;
-  --input-focus: #475569;
-  --primary: #6366f1;
-  --shadow: rgba(255, 255, 255, 0.1);
-}
+document.getElementById('registerForm').addEventListener('submit', function (e) {
+  e.preventDefault();
 
-body {
-  background: var(--bg);
-  font-family: 'Segoe UI', sans-serif;
-  color: var(--text);
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 1rem;
-  min-height: 100vh;
-  transition: 0.4s;
-}
+  const password = document.getElementById('password').value;
+  const confirm = document.getElementById('confirmPassword').value;
+  const terms = document.getElementById('terms').checked;
+  const errors = [];
 
-.toggle-theme {
-  align-self: flex-end;
-  padding: 1rem;
-}
+  if (password !== confirm) {
+    errors.push("Passwords do not match.");
+  }
 
-.toggle-theme button {
-  background: none;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  cursor: pointer;
-}
+  if (password.length < 8) {
+    errors.push("Password must be at least 8 characters.");
+  }
 
-.container {
-  background: var(--card);
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px var(--shadow);
-  max-width: 400px;
-  width: 100%;
-}
+  if (!terms) {
+    errors.push("You must accept the Terms of Service.");
+  }
 
-h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
+  const errorBox = document.getElementById('errorMessages');
+  if (errors.length > 0) {
+    errorBox.innerHTML = errors.map(e => `<p>${e}</p>`).join('');
+    return;
+  } else {
+    errorBox.innerHTML = "";
+    alert("Registration successful!");
+    // send to backend here
+  }
+});
 
-.form-group {
-  margin-bottom: 1.4rem;
-}
+// Password strength display
+document.getElementById('password').addEventListener('input', function () {
+  const val = this.value;
+  const strengthBox = document.getElementById('passwordStrength');
+  let strength = "Weak";
+  let color = "red";
 
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
+  if (val.length >= 12 && /[A-Z]/.test(val) && /[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) {
+    strength = "Strong";
+    color = "limegreen";
+  } else if (val.length >= 8 && /[A-Z]/.test(val) && /[0-9]/.test(val)) {
+    strength = "Medium";
+    color = "orange";
+  }
 
-.styled-input {
-  border: none;
-  outline: none;
-  border-radius: 15px;
-  padding: 1em;
-  background-color: var(--input-bg);
-  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
-  transition: 300ms ease-in-out;
-  width: 100%;
-  color: var(--text);
-}
+  strengthBox.textContent = `Password strength: ${strength}`;
+  strengthBox.style.color = color;
+});
 
-.styled-input:focus {
-  background-color: var(--input-focus);
-  transform: scale(1.02);
-  box-shadow: 10px 10px 60px var(--shadow),
-              -10px -10px 60px var(--shadow);
-}
-
-input[type="file"] {
-  width: 100%;
-}
-
-.checkbox {
-  display: flex;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  align-items: center;
-}
-
-.checkbox a {
-  color: var(--primary);
-  text-decoration: none;
-}
-
-button {
-  width: 100%;
-  padding: 1rem;
-  border: none;
-  background: var(--primary);
-  color: white;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #4338ca;
-}
-
-#errorMessages {
-  color: red;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-#passwordStrength {
-  font-size: 0.85rem;
-  margin-top: 0.3rem;
-  color: var(--text);
-}
-
-#preview img {
-  max-width: 100px;
-  margin-top: 0.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px var(--shadow);
-}
+// Theme toggle
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});
