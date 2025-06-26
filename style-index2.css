@@ -65,7 +65,7 @@ footer a:hover {
   color: #aaa;
 }
 
-/* Hamburger icon */
+/* Hamburger ikon jobb felső sarokban */
 #hamburger {
   position: absolute;
   top: 20px;
@@ -73,8 +73,8 @@ footer a:hover {
   font-size: 2rem;
   cursor: pointer;
   color: #ccc;
+  z-index: 999;
 }
-
 /* Mobilmenü */
 #mobileMenu {
   position: absolute;
@@ -121,4 +121,34 @@ footer a:hover {
 .secondary:hover {
   background: #444;
   color: #fff;
+}
+/* Lenyíló menü */
+.dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 998;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.dropdown a:hover {
+  color: #4facfe;
+}
+
+.hidden {
+  display: none;
 }
