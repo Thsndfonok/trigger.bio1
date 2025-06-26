@@ -1,0 +1,91 @@
+/* Alap stílusok */
+body {
+  margin: 0;
+  padding: 0;
+  background: #e6f0ff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #003366;
+}
+
+.login-container {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 51, 102, 0.2);
+  width: 350px;
+}
+
+h2 {
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: #004080;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 14px 12px;
+  margin-bottom: 20px;
+  border: 2px solid #99bbff;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #0066ff;
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 14px 0;
+  background: linear-gradient(90deg, #0059e6, #3399ff);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-button:hover {
+  background: linear-gradient(90deg, #003d99, #0073e6);
+}
+
+.signup-text {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #0059e6;
+}
+
+.signup-text a {
+  color: #004080;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+#errorMessages {
+  margin-top: 10px;
+  color: #cc0000;
+  font-weight: 600;
+  text-align: center;
+}
