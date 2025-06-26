@@ -34,9 +34,8 @@ form.addEventListener('submit', (e) => {
   }
 
   errorBox.innerHTML = '';
-  alert('Registration successful!');
+alert('Registration successful!');
+setTimeout(() => {
+  window.location.href = 'dashboard.html';
+}, 100); // 100 ms késleltetés
 
-  form.reset();
-
-  window.location.href = 'dashboard.html';  // átirányítás a dashboardra
-});
