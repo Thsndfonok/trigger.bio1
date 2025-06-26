@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // alap route: frontend megjelenítése
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/register.html'));
+  res.sendFile(path.join(__dirname, 'public/index2.html'));
 });
 
 // API végpont: regisztráció
