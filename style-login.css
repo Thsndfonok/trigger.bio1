@@ -1,4 +1,4 @@
-/* Alap stílusok */
+/* Alap, világos mód */
 body {
   margin: 0;
   padding: 0;
@@ -9,6 +9,7 @@ body {
   align-items: center;
   height: 100vh;
   color: #003366;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .login-container {
@@ -17,6 +18,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 8px 30px rgba(0, 51, 102, 0.2);
   width: 350px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 h2 {
@@ -40,7 +42,7 @@ input[type="password"] {
   border: 2px solid #99bbff;
   border-radius: 10px;
   font-size: 1rem;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 input[type="email"]:focus,
@@ -88,4 +90,71 @@ input[type="password"]:focus {
   color: #cc0000;
   font-weight: 600;
   text-align: center;
+}
+
+/* Toggle gomb */
+#themeToggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 8px 14px;
+  background: #3399ff;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+#themeToggle:hover {
+  background: #0073e6;
+}
+
+/* Dark mód */
+body.dark {
+  background: #121212;
+  color: #eee;
+}
+
+body.dark .login-container {
+  background: #1e1e1e;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+}
+
+body.dark h2 {
+  color: #66aaff;
+}
+
+body.dark label {
+  color: #aaccff;
+}
+
+body.dark input[type="email"],
+body.dark input[type="password"] {
+  background: #2a2a2a;
+  border-color: #3366cc;
+  color: #eee;
+}
+
+body.dark input[type="email"]:focus,
+body.dark input[type="password"]:focus {
+  border-color: #66aaff;
+}
+
+body.dark .login-button {
+  background: linear-gradient(90deg, #3399ff, #66aaff);
+}
+
+body.dark .login-button:hover {
+  background: linear-gradient(90deg, #66aaff, #99ccff);
+}
+
+body.dark .signup-text {
+  color: #6699cc;
+}
+
+body.dark .signup-text a {
+  color: #99bbff;
 }
