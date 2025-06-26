@@ -1,19 +1,3 @@
-// Dark/Light mode toggle
-const toggleBtn = document.createElement('button');
-toggleBtn.classList.add('toggle-theme-btn');
-toggleBtn.textContent = 'Toggle Dark/Light';
-document.body.appendChild(toggleBtn);
-
-toggleBtn.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-});
-
-// Form validáció és jelszó erősség ellenőrzés
-const form = document.getElementById('registerForm');
-const errorBox = document.getElementById('errorMessages');
-const passwordInput = document.getElementById('password');
-const confirmInput = document.getElementById('confirmPassword');
-
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const errors = [];
@@ -55,24 +39,8 @@ form.addEventListener('submit', (e) => {
   // Itt mehet a backend POST kérés
   // pl. fetch('/api/register', { method: 'POST', body: JSON.stringify(...)})
 
+  // Átirányítás a dashboardra
+  window.location.href = '/dashboard.html';  // vagy /dashboard, ami neked van
+
   form.reset();
-});
-
-// Jelszó erősség mutató
-passwordInput.addEventListener('input', () => {
-  const val = passwordInput.value;
-  const strengthBox = document.getElementById('passwordStrength');
-  let strength = 'Weak';
-  let color = 'red';
-
-  if (val.length >= 12 && /[A-Z]/.test(val) && /[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) {
-    strength = 'Strong';
-    color = 'limegreen';
-  } else if (val.length >= 8 && /[A-Z]/.test(val) && /[0-9]/.test(val)) {
-    strength = 'Medium';
-    color = 'orange';
-  }
-
-  strengthBox.textContent = `Password strength: ${strength}`;
-  strengthBox.style.color = color;
 });
