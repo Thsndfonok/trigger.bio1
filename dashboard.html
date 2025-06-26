@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard - Profil testreszabás</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h1>Profil testreszabás</h1>
+
+<form id="dashboardForm">
+  
+  <label for="profilePic">Profilkép feltöltése</label>
+  <input type="file" id="profilePic" accept="image/*" />
+  <div class="preview" id="profilePicPreview"></div>
+  
+  <label for="bgVideo">Háttérvideó feltöltése</label>
+  <input type="file" id="bgVideo" accept="video/*" />
+  <div class="preview" id="bgVideoPreview"></div>
+  
+  <label for="music">Zene feltöltése</label>
+  <input type="file" id="music" accept="audio/*" />
+  <div class="preview" id="musicPreview"></div>
+  
+  <label for="animatedText">Animált szöveg</label>
+  <input type="text" id="animatedText" value="money is everything" />
+  
+  <label for="animationStyle">Animáció stílusa</label>
+  <select id="animationStyle">
+    <option value="sparkle">Csillogás</option>
+    <option value="wave">Hullám</option>
+    <option value="fade">Eltűnés</option>
+  </select>
+  
+  <label for="textColor">Szöveg színe</label>
+  <input type="color" id="textColor" value="#00ff00" />
+  
+  <button type="submit">Mentés</button>
+</form>
+
+<script src="script.js"></script>
+
+</body>
+</html>
 
