@@ -1,6 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('loginForm');
   const errorBox = document.getElementById('errorMessages');
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Betöltéskor állítsuk be a témát a localStorage alapján
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+  }
+
+  // Téma váltó gomb esemény
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+
+    if (document.body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  });
 
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -26,9 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     errorBox.innerHTML = '';
 
     // TODO: Küldd el a login adatokat backendnek pl. fetch-sel
-    // Itt szimuláljuk a sikeres bejelentkezést:
-
-    localStorage.setItem('username', email.split('@')[0]); // egyszerű példa
+    // Sikeres bejelentkezés példája:
+    localStorage.setItem('username', email.split('@')[0]);
 
     alert('Login successful! Redirecting to dashboard...');
     window.location.href = '/dashboard.html';
