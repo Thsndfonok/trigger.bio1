@@ -2,39 +2,53 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Regisztráció</title>
-  <link rel="stylesheet" href="style-register.css">
+  <link rel="stylesheet" href="style-register.css" />
 </head>
 <body>
   <div class="container">
     <form id="registerForm" enctype="multipart/form-data">
-      <h2>Regisztráció</h2>
+      <h2>Fiók létrehozása</h2>
 
+      <!-- Felhasználónév -->
       <label for="username">Felhasználónév</label>
-      <input type="text" id="username" name="username" required minlength="4" maxlength="20">
+      <input type="text" id="username" name="username" class="input username" placeholder="Username" required minlength="4" maxlength="20">
 
+      <!-- Email -->
       <label for="email">Email cím</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" name="email" class="input email" placeholder="Email" required>
 
+      <!-- Jelszó -->
       <label for="password">Jelszó</label>
-      <input type="password" id="password" name="password" required>
+      <div class="group">
+        <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
+          <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <input class="input password" type="password" id="password" name="password" placeholder="Jelszó" required>
+      </div>
       <div id="passwordStrength"></div>
 
+      <!-- Jelszó megerősítés -->
       <label for="confirmPassword">Jelszó megerősítése</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <input type="password" id="confirmPassword" name="confirmPassword" class="input" placeholder="Ismételd meg a jelszót" required>
 
+      <!-- Profilkép -->
       <label for="profilePic">Profilkép feltöltés</label>
       <input type="file" id="profilePic" name="profilePic" accept="image/*">
 
-      <label>
-        <input type="checkbox" id="terms" required> Elfogadom a <a href="#">felhasználási feltételeket</a>
+      <!-- Feltételek -->
+      <label class="terms">
+        <input type="checkbox" id="terms" required>
+        Elfogadom a <a href="#">felhasználási feltételeket</a>
       </label>
 
+      <!-- Hibák -->
+      <div id="errorMessages"></div>
+
+      <!-- Gomb -->
       <button type="submit">Regisztrálok</button>
     </form>
-
-    <div id="errorMessages"></div>
   </div>
 
   <script src="script-register.js"></script>
