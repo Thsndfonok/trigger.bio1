@@ -1,47 +1,40 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dashboard - Profil testreszabás</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
+  <div class="dashboard-container">
+    <h1 id="welcomeMessage">Welcome 👋</h1>
 
-<h1>Profil testreszabás</h1>
+    <div class="card">
+      <label for="profilePic">Profile Picture</label>
+      <input type="file" accept="image/*" id="profilePic" />
 
-<form id="dashboardForm">
-  
-  <label for="profilePic">Profilkép feltöltése</label>
-  <input type="file" id="profilePic" accept="image/*" />
-  <div class="preview" id="profilePicPreview"></div>
-  
-  <label for="bgVideo">Háttérvideó feltöltése</label>
-  <input type="file" id="bgVideo" accept="video/*" />
-  <div class="preview" id="bgVideoPreview"></div>
-  
-  <label for="music">Zene feltöltése</label>
-  <input type="file" id="music" accept="audio/*" />
-  <div class="preview" id="musicPreview"></div>
-  
-  <label for="animatedText">Animált szöveg</label>
-  <input type="text" id="animatedText" value="money is everything" />
-  
-  <label for="animationStyle">Animáció stílusa</label>
-  <select id="animationStyle">
-    <option value="sparkle">Csillogás</option>
-    <option value="wave">Hullám</option>
-    <option value="fade">Eltűnés</option>
-  </select>
-  
-  <label for="textColor">Szöveg színe</label>
-  <input type="color" id="textColor" value="#00ff00" />
-  
-  <button type="submit">Mentés</button>
-</form>
+      <label for="bgVideo">Background Video</label>
+      <input type="file" accept="video/*" id="bgVideo" />
 
-<script src="script.js"></script>
+      <label for="musicUpload">Music Upload</label>
+      <input type="file" accept="audio/*" id="musicUpload" />
 
+      <label for="animatedText">Animated Bio Text</label>
+      <input type="text" id="animatedText" placeholder="money is everything" />
+
+      <label for="customURL">Custom URL</label>
+      <input type="text" id="customURL" disabled value="trigger.bio/..." />
+
+      <button id="saveBtn">Save Changes</button>
+    </div>
+
+    <div id="preview">
+      <h2>Live Preview</h2>
+      <div id="previewText">money is everything</div>
+    </div>
+  </div>
+
+  <script src="script-dashboard.js"></script>
 </body>
 </html>
-
