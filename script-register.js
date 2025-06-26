@@ -1,4 +1,9 @@
-form.addEventListener('submit', (e) => {
+const form = document.getElementById('registerForm');
+const errorBox = document.getElementById('errorMessages');
+const passwordInput = document.getElementById('password');
+const confirmInput = document.getElementById('confirmPassword');
+
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const errors = [];
 
@@ -29,14 +34,31 @@ form.addEventListener('submit', (e) => {
   }
 
   if (errors.length > 0) {
-    errorBox.innerHTML = errors.map(e => `<p>${e}</p>`).join('');
+    errorBox.innerHTML = errors.map(e => `<p style="color:red;">${e}</p>`).join('');
     return;
   }
 
   errorBox.innerHTML = '';
-  alert('Registration successful!');
 
-  form.reset();
+  try {
+    // Backend POST kérés, endpointot neked kell beállítani
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password, customUrl }),
+    });
 
-  window.location.href = 'dashboard.html';  // átirányítás a dashboardra
+    if (!response.ok) {
+      const data = await response.json();
+      errorBox.innerHTML = `<p style="color:red;">${data.message || 'Registration failed.'}</p>`;
+      return;
+    }
+
+    alert('Registration successful!');
+    form.reset();
+    window.location.href = 'dashboard.html';  // átirányítás
+  } catch (error) {
+    errorBox.innerHTML = `<p style="color:red;">Network error, please try again later.</p>`;
+    console.error(error);
+  }
 });
