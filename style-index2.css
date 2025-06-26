@@ -64,3 +64,61 @@ footer a {
 footer a:hover {
   color: #aaa;
 }
+
+/* Hamburger icon */
+#hamburger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc;
+}
+
+/* Mobilmenü */
+#mobileMenu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+#mobileMenu a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+#mobileMenu a:hover {
+  color: #4facfe;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Gombok egymás mellett */
+.button-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.secondary {
+  background: #333;
+  color: #eee;
+}
+
+.secondary:hover {
+  background: #444;
+  color: #fff;
+}
