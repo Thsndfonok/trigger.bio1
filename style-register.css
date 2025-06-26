@@ -1,26 +1,62 @@
+:root {
+  --bg: #f8fafc;
+  --text: #1e293b;
+  --card: white;
+  --input-bg: #e2e8f0;
+  --input-focus: white;
+  --primary: #4f46e5;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body.dark {
+  --bg: #0f172a;
+  --text: #f1f5f9;
+  --card: #1e293b;
+  --input-bg: #334155;
+  --input-focus: #475569;
+  --primary: #6366f1;
+  --shadow: rgba(255, 255, 255, 0.1);
+}
+
 body {
-  background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+  background: var(--bg);
   font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  color: var(--text);
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  transition: 0.4s;
+}
+
+.toggle-theme {
+  align-self: flex-end;
+  padding: 1rem;
+}
+
+.toggle-theme button {
+  background: none;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .container {
-  background: white;
-  padding: 2.5rem 2rem;
+  background: var(--card);
+  padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 40px var(--shadow);
   max-width: 400px;
-  width: 90%;
+  width: 100%;
 }
 
 h2 {
   text-align: center;
   margin-bottom: 2rem;
-  color: #1e293b;
 }
 
 .form-group {
@@ -31,46 +67,48 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #334155;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
+.styled-input {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  padding: 1em;
+  background-color: var(--input-bg);
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: 300ms ease-in-out;
+  width: 100%;
+  color: var(--text);
+}
+
+.styled-input:focus {
+  background-color: var(--input-focus);
+  transform: scale(1.02);
+  box-shadow: 10px 10px 60px var(--shadow),
+              -10px -10px 60px var(--shadow);
+}
+
 input[type="file"] {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: 0.3s ease;
-  background: #f1f5f9;
-}
-
-input:focus {
-  border-color: #6366f1;
-  background: white;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 .checkbox {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
+  align-items: center;
 }
 
 .checkbox a {
-  color: #6366f1;
+  color: var(--primary);
   text-decoration: none;
 }
 
 button {
   width: 100%;
-  padding: 0.9rem;
+  padding: 1rem;
   border: none;
-  background: #4f46e5;
+  background: var(--primary);
   color: white;
   border-radius: 10px;
   font-weight: 600;
@@ -92,13 +130,12 @@ button:hover {
 #passwordStrength {
   font-size: 0.85rem;
   margin-top: 0.3rem;
-  color: #64748b;
+  color: var(--text);
 }
 
-/* Profilkép előnézet */
 #preview img {
   max-width: 100px;
   margin-top: 0.5rem;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px var(--shadow);
 }
