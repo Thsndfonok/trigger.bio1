@@ -1,122 +1,78 @@
-/* style-register.css */
+// Dark/Light mode toggle
+const toggleBtn = document.createElement('button');
+toggleBtn.classList.add('toggle-theme-btn');
+toggleBtn.textContent = 'Toggle Dark/Light';
+document.body.appendChild(toggleBtn);
 
-:root {
-  --bg-light: #f0f0f0;
-  --bg-dark: #121212;
-  --text-light: #000;
-  --text-dark: #fff;
-  --input-bg: #ccc;
-  --input-bg-focus: #fff;
-  --accent: #818cf8;
-}
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--bg-light);
-  color: var(--text-light);
-  transition: background-color 0.3s, color 0.3s;
-}
+// Form validáció és jelszó erősség ellenőrzés
+const form = document.getElementById('registerForm');
+const errorBox = document.getElementById('errorMessages');
+const passwordInput = document.getElementById('password');
+const confirmInput = document.getElementById('confirmPassword');
 
-body.dark {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const errors = [];
 
-.container {
-  max-width: 500px;
-  margin: 50px auto;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(8px);
-}
+  const username = form.username.value.trim();
+  const email = form.email.value.trim();
+  const password = passwordInput.value;
+  const confirm = confirmInput.value;
+  const customUrl = form.customUrl.value.trim();
 
-h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
+  if (username.length < 4 || username.length > 20) {
+    errors.push('Username must be 4-20 characters long.');
+  }
 
-.form-group {
-  margin-bottom: 1.5rem;
-}
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    errors.push('Please enter a valid email address.');
+  }
 
-.styled-input {
-  border: none;
-  outline: none;
-  border-radius: 15px;
-  padding: 1em;
-  width: 100%;
-  background-color: var(--input-bg);
-  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
-  transition: 300ms ease-in-out;
-  font-size: 1rem;
-  color: #0d0c22;
-}
+  if (password.length < 8) {
+    errors.push('Password must be at least 8 characters long.');
+  }
 
-.styled-input:focus {
-  background-color: var(--input-bg-focus);
-  transform: scale(1.02);
-  box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
-}
+  if (password !== confirm) {
+    errors.push('Passwords do not match.');
+  }
 
-.url-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+  if (!customUrl.match(/^[a-zA-Z0-9-_]{3,}$/)) {
+    errors.push('Custom URL must be at least 3 characters and contain only letters, numbers, hyphens, or underscores.');
+  }
 
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-}
+  if (errors.length > 0) {
+    errorBox.innerHTML = errors.map(e => `<p>${e}</p>`).join('');
+    return;
+  }
 
-button[type="submit"] {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
+  errorBox.innerHTML = '';
+  alert('Registration successful!');
 
-button[type="submit"]:hover {
-  background-color: #4f46e5;
-}
+  // Itt mehet a backend POST kérés
+  // pl. fetch('/api/register', { method: 'POST', body: JSON.stringify(...)})
 
-#errorMessages {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 1rem;
-}
+  form.reset();
+});
 
-#passwordStrength {
-  font-size: 0.85rem;
-  margin-top: 0.3rem;
-}
+// Jelszó erősség mutató
+passwordInput.addEventListener('input', () => {
+  const val = passwordInput.value;
+  const strengthBox = document.getElementById('passwordStrength');
+  let strength = 'Weak';
+  let color = 'red';
 
-.toggle-theme {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-}
+  if (val.length >= 12 && /[A-Z]/.test(val) && /[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) {
+    strength = 'Strong';
+    color = 'limegreen';
+  } else if (val.length >= 8 && /[A-Z]/.test(val) && /[0-9]/.test(val)) {
+    strength = 'Medium';
+    color = 'orange';
+  }
 
-#themeToggle {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  background-color: #eee;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-#themeToggle:hover {
-  background-color: #ddd;
-}
+  strengthBox.textContent = `Password strength: ${strength}`;
+  strengthBox.style.color = color;
+});
