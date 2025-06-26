@@ -142,25 +142,24 @@
       errorBox.innerHTML = '';
 
       try {
-        const response = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, email, password, customUrl }),
-        });
+       const response = await fetch('/api/register', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ username, email, password, customUrl }),
+});
 
-        const data = await response.json();
+const data = await response.json();
 
-        if (!response.ok) {
-          errorBox.innerHTML = `<p style="color:red;">${data.error || 'Registration failed.'}</p>`;
-          return;
-        }
+if (!response.ok) {
+  errorBox.innerHTML = `<p style="color:red;">${data.error || 'Registration failed.'}</p>`;
+  return;
+}
 
-        alert('Registration successful!');
-        form.reset();
-        window.location.href = 'dashboard.html';
-      } catch (error) {
-        errorBox.innerHTML = `<p style="color:red;">Network error, please try again later.</p>`;
-        console.error(error);
+// SIKER ESETÉN
+alert('Registration successful!');
+form.reset();
+window.location.href = 'dashboard.html';
+
       }
     });
   </script>
