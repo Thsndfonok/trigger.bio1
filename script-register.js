@@ -1,68 +1,122 @@
-document.getElementById('registerForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+/* style-register.css */
 
-  const password = document.getElementById('password').value;
-  const confirm = document.getElementById('confirmPassword').value;
-  const terms = document.getElementById('terms').checked;
-  const errorBox = document.getElementById('errorMessages');
-  const errors = [];
+:root {
+  --bg-light: #f0f0f0;
+  --bg-dark: #121212;
+  --text-light: #000;
+  --text-dark: #fff;
+  --input-bg: #ccc;
+  --input-bg-focus: #fff;
+  --accent: #818cf8;
+}
 
-  if (password !== confirm) {
-    errors.push("A jelszavak nem egyeznek.");
-  }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s;
+}
 
-  if (password.length < 8) {
-    errors.push("A jelszónak legalább 8 karakter hosszúnak kell lennie.");
-  }
+body.dark {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
 
-  if (!terms) {
-    errors.push("El kell fogadnod a felhasználási feltételeket.");
-  }
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+}
 
-  if (errors.length > 0) {
-    errorBox.innerHTML = errors.map(err => `<p>${err}</p>`).join('');
-  } else {
-    errorBox.innerHTML = '';
-    alert("Sikeres regisztráció!");
-    this.submit();
-  }
-});
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
-// Jelszóerősség
-document.getElementById('password').addEventListener('input', function () {
-  const val = this.value;
-  const strengthBox = document.getElementById('passwordStrength');
-  let strength = "Gyenge", color = "red";
+.form-group {
+  margin-bottom: 1.5rem;
+}
 
-  if (val.length >= 12 && /[A-Z]/.test(val) && /[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) {
-    strength = "Erős";
-    color = "green";
-  } else if (val.length >= 8 && /[A-Z]/.test(val) && /[0-9]/.test(val)) {
-    strength = "Közepes";
-    color = "orange";
-  }
+.styled-input {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  padding: 1em;
+  width: 100%;
+  background-color: var(--input-bg);
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  transition: 300ms ease-in-out;
+  font-size: 1rem;
+  color: #0d0c22;
+}
 
-  strengthBox.textContent = `Jelszó erőssége: ${strength}`;
-  strengthBox.style.color = color;
-});
+.styled-input:focus {
+  background-color: var(--input-bg-focus);
+  transform: scale(1.02);
+  box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
+}
 
-// Profilkép előnézet
-document.getElementById('profilePic').addEventListener('change', function () {
-  const preview = document.getElementById('preview');
-  preview.innerHTML = '';
-  const file = this.files[0];
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const img = document.createElement('img');
-      img.src = e.target.result;
-      preview.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  }
-});
+.url-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
-// Dark/Light toggle
-document.getElementById('themeToggle').addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-});
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #4f46e5;
+}
+
+#errorMessages {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+#passwordStrength {
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.toggle-theme {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+#themeToggle {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#themeToggle:hover {
+  background-color: #ddd;
+}
