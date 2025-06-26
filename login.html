@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | trigger.bio</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <form id="loginForm" autocomplete="off">
+      <h2>Login to trigger.bio</h2>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+      <button type="submit" class="login-button">Login</button>
+
+      <p class="signup-text">
+        Don't have an account? <a href="/register.html">Register here</a>
+      </p>
+
+      <div id="errorMessages"></div>
+    </form>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
