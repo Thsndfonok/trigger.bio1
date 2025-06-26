@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register</title>
   <link rel="stylesheet" href="style-register.css" />
   <style>
+    /* Toggle gomb jobb felső sarokba fix pozíció */
     #themeToggle {
       position: fixed;
       top: 20px;
@@ -20,6 +22,7 @@
       z-index: 1000;
       transition: background-color 0.3s ease;
     }
+
     #themeToggle:hover {
       background-color: #4f46e5;
     }
@@ -94,72 +97,70 @@
 
       passwordStrengthBox.textContent = `Password strength: ${strength}`;
       passwordStrengthBox.style.color = color;
+
     });
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-      const errors = [];
-      const username = form.username.value.trim();
-      const email = form.email.value.trim();
-      const password = passwordInput.value;
-      const confirm = confirmInput.value;
-      const customUrl = form.customUrl.value.trim();
-      const termsAccepted = document.getElementById('terms').checked;
+  const errors = [];
 
-      if (username.length < 4 || username.length > 20) {
-        errors.push('Username must be 4-20 characters long.');
-      }
+  const username = form.username.value.trim();
+  const email = form.email.value.trim();
+  const password = passwordInput.value;
+  const confirm = confirmInput.value;
+  const customUrl = form.customUrl.value.trim();
+  const termsAccepted = document.getElementById('terms').checked;
 
-      if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        errors.push('Please enter a valid email address.');
-      }
+  if (username.length < 4 || username.length > 20) {
+    errors.push('Username must be 4-20 characters long.');
+  }
 
-      if (password.length < 8) {
-        errors.push('Password must be at least 8 characters long.');
-      }
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    errors.push('Please enter a valid email address.');
+  }
 
-      if (password !== confirm) {
-        errors.push('Passwords do not match.');
-      }
+  if (password.length < 8) {
+    errors.push('Password must be at least 8 characters long.');
+  }
 
-      if (!customUrl.match(/^[a-zA-Z0-9-_]{3,}$/)) {
-        errors.push('Custom URL must be at least 3 characters and contain only letters, numbers, hyphens, or underscores.');
-      }
+  if (password !== confirm) {
+    errors.push('Passwords do not match.');
+  }
 
-      if (!termsAccepted) {
-        errors.push('You must accept the terms of service.');
-      }
+  if (!customUrl.match(/^[a-zA-Z0-9-_]{3,}$/)) {
+    errors.push('Custom URL must be at least 3 characters and contain only letters, numbers, hyphens, or underscores.');
+  }
 
-      if (errors.length > 0) {
-        errorBox.innerHTML = errors.map(e => `<p style="color:red;">${e}</p>`).join('');
-        return;
-      }
+  if (!termsAccepted) {
+    errors.push('You must accept the terms of service.');
+  }
 
-      errorBox.innerHTML = '';
+  if (errors.length > 0) {
+    errorBox.innerHTML = errors.map(e => `<p style="color:red;">${e}</p>`).join('');
+    return;
+  }
 
-      try {
-        const response = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, email, password, customUrl }),
-        });
+  errorBox.innerHTML = '';
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          errorBox.innerHTML = `<p style="color:red;">${data.error || 'Registration failed.'}</p>`;
-          return;
-        }
-
-        alert('Registration successful!');
-        form.reset();
-        window.location.href = 'dashboard.html';
-      } catch (error) {
-        errorBox.innerHTML = `<p style="color:red;">Network error, please try again later.</p>`;
-        console.error(error);
-      }
+  try {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password, customUrl }),
     });
-  </script>
-</body>
-</html>
+
+    if (!response.ok) {
+      const data = await response.json();
+      errorBox.innerHTML = `<p style="color:red;">${data.error || 'Registration failed.'}</p>`;
+      return;
+    }
+
+    alert('Registration successful!');
+    form.reset();
+    window.location.href = 'dashboard.html';
+  } catch (error) {
+    errorBox.innerHTML = `<p style="color:red;">Network error, please try again later.</p>`;
+    console.error(error);
+  }
+});
