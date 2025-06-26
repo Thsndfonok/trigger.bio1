@@ -1,60 +1,47 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Regisztráció</title>
-  <link rel="stylesheet" href="style-register.css">
+  <title>Register</title>
+  <link rel="stylesheet" href="style-register.css" />
 </head>
-<body>
-  <div class="toggle-theme">
-    <button id="themeToggle">🌞 / 🌙</button>
-  </div>
 
+<body class="dark">
   <div class="container">
+    <button id="themeToggle">Toggle Theme</button>
     <form id="registerForm">
-      <h2>Fiók létrehozása</h2>
+      <h2>Sign Up</h2>
 
-      <div class="form-group">
-        <label for="username">Felhasználónév</label>
-        <input type="text" id="username" name="username" placeholder="thsnd" class="styled-input" required>
-      </div>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" class="input neumorphic" placeholder="Enter username" required>
 
-      <div class="form-group">
-        <label for="email">Email cím</label>
-        <input type="email" id="email" name="email" placeholder="valami@email.com" class="styled-input" required>
-      </div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" class="input neumorphic" placeholder="Enter email" required>
 
-      <div class="form-group">
-        <label for="password">Jelszó</label>
-        <input type="password" id="password" name="password" placeholder="Legalább 8 karakter" class="styled-input" required>
-        <div id="passwordStrength"></div>
-      </div>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" class="input neumorphic" placeholder="Enter password" required>
+      <div id="passwordStrength"></div>
 
-      <div class="form-group">
-        <label for="confirmPassword">Jelszó megerősítése</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" class="styled-input" required>
-      </div>
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" class="input neumorphic" placeholder="Confirm password" required>
 
-      <div class="form-group">
-        <label for="customUrl">Egyedi oldal URL</label>
-        <div class="url-group">
-          <span>trigger.bio/</span>
-          <input type="text" id="customUrl" name="customUrl" placeholder="sajatnev" class="styled-input" required>
-        </div>
-      </div>
+      <label for="customUrl">trigger.bio/</label>
+      <input type="text" id="customUrl" name="customUrl" class="input neumorphic" placeholder="yourname" required>
 
-      <div class="form-group checkbox">
+      <label class="checkbox">
         <input type="checkbox" id="terms" required>
-        <label for="terms">Elfogadom a <a href="#">felhasználási feltételeket</a></label>
-      </div>
+        I accept the <a href="#">terms of service</a>
+      </label>
 
-      <div id="errorMessages"></div>
-
-      <button type="submit">Regisztrálok</button>
+      <button type="submit" class="submit-button">Register</button>
     </form>
+
+    <div id="errorMessages"></div>
   </div>
 
   <script src="script-register.js"></script>
 </body>
+
 </html>
