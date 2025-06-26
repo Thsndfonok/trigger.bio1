@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regisztráció</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <form id="registerForm" enctype="multipart/form-data">
+      <h2>Regisztráció</h2>
+
+      <label for="username">Felhasználónév</label>
+      <input type="text" id="username" name="username" required minlength="4" maxlength="20">
+
+      <label for="email">Email cím</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Jelszó</label>
+      <input type="password" id="password" name="password" required>
+      <div id="passwordStrength"></div>
+
+      <label for="confirmPassword">Jelszó megerősítése</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+      <label for="profilePic">Profilkép feltöltés</label>
+      <input type="file" id="profilePic" name="profilePic" accept="image/*">
+
+      <label>
+        <input type="checkbox" id="terms" required> Elfogadom a <a href="#">felhasználási feltételeket</a>
+      </label>
+
+      <button type="submit">Regisztrálok</button>
+    </form>
+
+    <div id="errorMessages"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
