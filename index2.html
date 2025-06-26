@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="style-index2.css" />
 </head>
 <body>
+  <!-- Hamburger Menu -->
+  <div id="hamburger">&#9776;</div>
+  <div id="mobileMenu" class="hidden">
+    <a href="/register.html" id="menuRegister">Register</a>
+    <a href="/login.html" id="menuLogin">Login</a>
+    <a href="/dashboard.html" id="menuDashboard" class="hidden">Dashboard</a>
+  </div>
+
   <h1>trigger.bio</h1>
 
   <p class="subtitle">
@@ -14,7 +22,10 @@
     Customize your music, video, links and more.
   </p>
 
-  <a href="/register.html" class="hero-button">Get Started</a>
+  <div class="button-group">
+    <a href="/register.html" class="hero-button">Get Started</a>
+    <a href="/login.html" class="hero-button secondary">Login</a>
+  </div>
 
   <footer>
     <a href="/terms.html">Terms</a>
