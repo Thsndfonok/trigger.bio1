@@ -42,7 +42,7 @@ form.addEventListener('submit', async (e) => {
 
   try {
     // Backend POST kérés, endpointot neked kell beállítani
-    const response = await fetch('https://trigger.bio/api/register', {
+    const response = await fetch('http://core0.srkhost.eu:9911/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, password, customUrl }),
