@@ -1,137 +1,104 @@
-/* Alap container */
 body {
-  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
   font-family: 'Segoe UI', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
 }
 
 .container {
-  background-color: #fff;
-  padding: 2rem 3rem;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  width: 100%;
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   max-width: 400px;
+  width: 90%;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  color: #1e293b;
 }
 
-/* Címkék */
+.form-group {
+  margin-bottom: 1.4rem;
+}
+
 label {
   display: block;
-  margin-top: 1rem;
-  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: 0.3s ease;
+  background: #f1f5f9;
+}
+
+input:focus {
+  border-color: #6366f1;
+  background: white;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.9rem;
 }
 
-/* Gomb */
-button {
-  width: 100%;
-  padding: 0.8rem;
-  margin-top: 1.5rem;
-  background-color: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background-color: #3730a3;
-}
-
-/* Feltételek */
-.terms {
-  margin-top: 1rem;
-  font-size: 0.85rem;
-}
-
-.terms a {
-  color: #4f46e5;
+.checkbox a {
+  color: #6366f1;
   text-decoration: none;
 }
 
-/* Hibák */
-#errorMessages {
-  color: red;
-  margin-top: 0.5rem;
+button {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* Password erősség */
+button:hover {
+  background: #4338ca;
+}
+
+#errorMessages {
+  color: red;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
 #passwordStrength {
   font-size: 0.85rem;
   margin-top: 0.3rem;
+  color: #64748b;
 }
 
-/* ===== CUSTOM INPUT STÍLUSOK ===== */
-
-/* Username (Praashoo7) */
-.input.username {
-  border: none;
-  outline: none;
-  border-radius: 15px;
-  padding: 1em;
-  background-color: #ccc;
-  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
-  transition: 300ms ease-in-out;
-  width: 100%;
-  margin-top: 0.3rem;
-}
-
-.input.username:focus {
-  background-color: white;
-  transform: scale(1.05);
-  box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
-}
-
-/* Password (ozgeozkaraa01) */
-.group {
-  display: flex;
-  line-height: 30px;
-  align-items: center;
-  position: relative;
-  margin-top: 0.3rem;
-}
-
-.input.password {
-  width: 100%;
-  height: 45px;
-  line-height: 30px;
-  padding: 0 5rem;
-  padding-left: 3rem;
-  border: 2px solid transparent;
+/* Profilkép előnézet */
+#preview img {
+  max-width: 100px;
+  margin-top: 0.5rem;
   border-radius: 10px;
-  outline: none;
-  background-color: #f8fafc;
-  color: #0d0c22;
-  transition: .5s ease;
-}
-
-.input.password::placeholder {
-  color: #94a3b8;
-}
-
-.input.password:focus,
-.input.password:hover {
-  outline: none;
-  border-color: rgba(129, 140, 248);
-  background-color: #fff;
-  box-shadow: 0 0 0 5px rgb(129 140 248 / 30%);
-}
-
-.icon {
-  position: absolute;
-  left: 1rem;
-  fill: none;
-  width: 1rem;
-  height: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
