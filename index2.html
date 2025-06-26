@@ -2,39 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome | trigger.bio</title>
-  <link rel="stylesheet" href="style-index2.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | trigger.bio</title>
+  <link rel="stylesheet" href="login.css" />
 </head>
 <body>
+  <button id="themeToggle" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light</button>
 
-  <!-- Hamburger Menü jobb felső sarokban -->
+  <!-- Hamburger menü ikon jobb felső sarokban -->
   <div id="hamburger">&#9776;</div>
+
+  <!-- Lenyíló menü -->
   <div id="dropdownMenu" class="dropdown hidden">
     <a href="/register.html" id="menuRegister">Register</a>
     <a href="/login.html" id="menuLogin">Login</a>
-    <a href="/dashboard.html" id="menuDashboard" class="hidden">Dashboard</a>
   </div>
 
-  <h1>trigger.bio</h1>
+  <div class="login-container">
+    <form id="loginForm" autocomplete="off">
+      <h2>Login to trigger.bio</h2>
 
-  <p class="subtitle">
-    Create your own stylish bio page.<br />
-    Customize your music, video, links and more.
-  </p>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
 
-  <div class="button-group">
-    <a href="/register.html" class="hero-button">Get Started</a>
-    <a href="/login.html" class="hero-button secondary">Login</a>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+      <button type="submit" class="login-button">Login</button>
+
+      <p class="signup-text">
+        Don't have an account? <a href="/register.html">Register here</a>
+      </p>
+
+      <div id="errorMessages"></div>
+    </form>
   </div>
 
-  <footer>
-    <a href="/terms.html">Terms</a>
-    <a href="/privacy.html">Privacy</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="https://discord.gg/yourserver" target="_blank">Discord</a>
-  </footer>
-
-  <script src="script-index2.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
