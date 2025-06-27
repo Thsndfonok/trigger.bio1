@@ -6,14 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('welcomeMessage').textContent = `Welcome, ${username} 👋`;
   document.getElementById('customURL').value = `trigger.bio/${customUrl}`;
 
- const userId = localStorage.getItem('userId');
-if (!userId) {
-  alert('Nem vagy bejelentkezve vagy nincs userId tárolva!');
-  // esetleg redirect a login oldalra
-  window.location.href = '/login.html'; 
-  return;
-}
-
+  const userId = localStorage.getItem('userId');
+  if (!userId) {
+    alert('Nem vagy bejelentkezve vagy nincs userId tárolva!');
+    window.location.href = '/login.html'; 
+    return;
+  }
 
   const profilePicInput = document.getElementById('profilePic');
   const bgVideoInput = document.getElementById('bgVideo');
@@ -25,6 +23,45 @@ if (!userId) {
   let profileImageUrl = '';
   let bgVideoUrl = '';
   let musicUrl = '';
+
+  // Betöltjük a meglévő profiladatokat
+  async function loadUserData() {
+    try {
+      const res = await fetch(`https://thsnd-backend.onrender.com/api/user/${userId}`);
+      if (!res.ok) throw new Error('Nem sikerült betölteni a felhasználó adatait');
+      const user = await res.json();
+
+      profileImageUrl = user.profileImage || '';
+      bgVideoUrl = user.bgVideoUrl || '';
+      musicUrl = user.musicUrl || '';
+      animatedTextInput.value = user.specialText || '';
+      previewText.textContent = animatedTextInput.value || 'money is everything';
+
+      // Előnézetek beállítása (feltételezve, hogy vannak ilyen elemek az oldalon)
+      if (profileImageUrl) {
+        const imgPreview = document.getElementById('profilePicPreview');
+        if(imgPreview) imgPreview.src = profileImageUrl;
+      }
+      if (bgVideoUrl) {
+        const videoPreview = document.getElementById('bgVideoPreview');
+        if(videoPreview) {
+          videoPreview.src = bgVideoUrl;
+          videoPreview.style.display = 'block';
+        }
+      }
+      if (musicUrl) {
+        const musicPlayer = document.getElementById('musicPlayer');
+        if(musicPlayer) {
+          musicPlayer.src = musicUrl;
+          musicPlayer.style.display = 'block';
+        }
+      }
+    } catch (err) {
+      alert('Hiba a profiladatok betöltésekor: ' + err.message);
+    }
+  }
+
+  loadUserData();
 
   // Animált szöveg élő frissítés
   animatedTextInput.addEventListener('input', () => {
@@ -43,12 +80,10 @@ if (!userId) {
 
       if (bgVideoInput.files.length > 0) {
         bgVideoUrl = await uploadFile(userId, bgVideoInput.files[0], 'bgVideo', 'upload-bg-video'); 
-        // Backend végpont szükséges még
       }
 
       if (musicUploadInput.files.length > 0) {
         musicUrl = await uploadFile(userId, musicUploadInput.files[0], 'musicFile', 'upload-music'); 
-        // Backend végpont szükséges még
       }
 
       // Mentés a profil többi adatával
