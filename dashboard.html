@@ -22,28 +22,29 @@
     </nav>
 
     <main class="main-content">
-      <section id="sectionDashboard" class="active-section">
-        <h2>Profil kezelése</h2>
-        <div class="form-group">
-          <label for="profilePic">Profilkép feltöltése</label>
-          <input type="file" id="profilePic" accept="image/*" />
-          <img id="profilePicPreview" class="preview-img" alt="Profilkép előnézet" />
-        </div>
-        <div class="form-group">
-          <label for="bgVideo">Háttérvideó feltöltése</label>
-          <input type="file" id="bgVideo" accept="video/*" />
-          <video id="bgVideoPreview" controls class="preview-video"></video>
-        </div>
-        <div class="form-group">
-          <label for="musicUpload">Zene feltöltése</label>
-          <input type="file" id="musicUpload" accept="audio/*" />
-          <audio id="musicPlayer" controls class="preview-audio"></audio>
-        </div>
-        <div class="form-group">
-          <label for="animatedText">Speciális animált szöveg</label>
-          <input type="text" id="animatedText" placeholder="money is everything" />
-          <p id="previewText" class="animated-text-preview">money is everything</p>
-        </div>
+  <section id="sectionDashboard" class="active-section">
+    <div class="profile-container">
+      <h2>Profil kezelése</h2>
+      <div class="form-group">
+        <label for="profilePic">Profilkép feltöltése</label>
+        <input type="file" id="profilePic" accept="image/*" />
+        <img id="profilePicPreview" class="preview-img" alt="Profilkép előnézet" />
+      </div>
+      <div class="form-group">
+        <label for="bgVideo">Háttérvideó feltöltése</label>
+        <input type="file" id="bgVideo" accept="video/*" />
+        <video id="bgVideoPreview" controls class="preview-video"></video>
+      </div>
+      <div class="form-group">
+        <label for="musicUpload">Zene feltöltése</label>
+        <input type="file" id="musicUpload" accept="audio/*" />
+        <audio id="musicPlayer" controls class="preview-audio"></audio>
+      </div>
+      <div class="form-group">
+        <label for="animatedText">Speciális animált szöveg</label>
+        <input type="text" id="animatedText" placeholder="money is everything" />
+        <p id="previewText" class="animated-text-preview">money is everything</p>
+      </div>
         <button id="saveBtn" class="btn-save">Mentés</button>
       </section>
 
