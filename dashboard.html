@@ -1,43 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Thsnd</title>
   <link rel="stylesheet" href="style-dashboard.css" />
+  <!-- FontAwesome ikonokhoz -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
+  <script src="script-dashboard.js" defer></script>
 </head>
 <body>
-  <div class="dashboard-container">
-    <h1 id="welcomeMessage">Welcome 👋</h1>
+  <nav>
+    <h2>Thsnd</h2>
+    <button id="navDashboard" class="active">Dashboard</button>
+    <button id="navLinks">Links</button>
+    <button id="navPremium">Premium</button>
+  </nav>
 
-    <div class="card">
-      <label for="profilePic">Profile Picture</label>
-      <input type="file" accept="image/*" id="profilePic" />
-      <img id="profilePicPreview" alt="Profile Picture Preview" style="max-width: 200px; margin-top: 10px; display: none;" />
+  <main>
+    <!-- Dashboard szekció -->
+    <section id="sectionDashboard">
+      <h1>Dashboard</h1>
+      <form id="uploadForm">
+        <label for="profilePic">Profilkép feltöltése</label>
+        <input type="file" id="profilePic" accept="image/*" />
 
-      <label for="bgVideo">Background Video</label>
-      <input type="file" accept="video/*" id="bgVideo" />
-      <video id="bgVideoPreview" controls style="max-width: 400px; margin-top: 10px; display: none;"></video>
+        <label for="bgVideo">Háttérvideó feltöltése</label>
+        <input type="file" id="bgVideo" accept="video/*" />
 
-      <label for="musicUpload">Music Upload</label>
-      <input type="file" accept="audio/*" id="musicUpload" />
-      <audio id="musicPlayer" controls style="margin-top: 10px; display: none;"></audio>
+        <label for="musicUpload">Zene feltöltése</label>
+        <input type="file" id="musicUpload" accept="audio/*" />
 
-      <label for="animatedText">Animated Bio Text</label>
-      <input type="text" id="animatedText" placeholder="money is everything" />
+        <label for="animatedText">Animált szöveg</label>
+        <input type="text" id="animatedText" placeholder="Írj valamit..." />
 
-      <label for="customURL">Custom URL</label>
-      <input type="text" id="customURL" disabled value="trigger.bio/..." />
+        <button type="button" id="saveBtn">Save Changes</button>
+      </form>
+    </section>
 
-      <button id="saveBtn">Save Changes</button>
-    </div>
+    <!-- Links szekció -->
+    <section id="sectionLinks" style="display:none;">
+      <h1>Links</h1>
+      <ul id="linksList"></ul>
+      <div class="link-inputs">
+        <select id="linkPlatform">
+          <option value="instagram">Instagram</option>
+          <option value="facebook">Facebook</option>
+          <option value="twitter">Twitter</option>
+          <option value="youtube">YouTube</option>
+          <option value="tiktok">TikTok</option>
+          <option value="linkedin">LinkedIn</option>
+          <option value="github">GitHub</option>
+          <option value="website">Website</option>
+        </select>
+        <input type="url" id="linkUrl" placeholder="Link URL" />
+        <button id="addLinkBtn" type="button">Hozzáadás</button>
+      </div>
+    </section>
 
-    <div id="preview">
-      <h2>Live Preview</h2>
-      <div id="previewText">money is everything</div>
-    </div>
-  </div>
-
-  <script src="script-dashboard.js"></script>
+    <!-- Premium szekció -->
+    <section id="sectionPremium" style="display:none;">
+      <h1>Premium</h1>
+      <p>Premium funkciók hamarosan!</p>
+    </section>
+  </main>
 </body>
 </html>
