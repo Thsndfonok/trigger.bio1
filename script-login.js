@@ -3,15 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorBox = document.getElementById('errorMessages');
   const themeToggle = document.getElementById('themeToggle');
 
-  // Betöltéskor állítsuk be a témát a localStorage alapján
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark');
   }
 
-  // Téma váltó gomb esemény
   themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark');
-
     if (document.body.classList.contains('dark')) {
       localStorage.setItem('theme', 'dark');
     } else {
@@ -19,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const email = form.email.value.trim();
@@ -42,11 +39,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     errorBox.innerHTML = '';
 
-    // TODO: Küldd el a login adatokat backendnek pl. fetch-sel
-    // Sikeres bejelentkezés példája:
-    localStorage.setItem('username', email.split('@')[0]);
+    try {
+      const res = await fetch('https://thsnd-backend.onrender.com/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    alert('Login successful! Redirecting to dashboard...');
-    window.location.href = '/dashboard.html';
+      const data = await res.json();
+
+      if (!res.ok) {
+        errorBox.innerHTML = `<p>${data.error || 'Login failed'}</p>`;
+        return;
+      }
+
+      // Backend visszaküldi a user adatokat, benne az _id-vel
+      localStorage.setItem('userId', data.user._id);
+      localStorage.setItem('username', data.user.username);
+      localStorage.setItem('customUrl', data.user.customUrl);
+
+      alert('Login successful! Redirecting to dashboard...');
+      window.location.href = '/dashboard.html';
+    } catch (err) {
+      errorBox.innerHTML = `<p>Network error: ${err.message}</p>`;
+    }
   });
 });
