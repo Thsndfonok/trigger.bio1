@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const path = window.location.pathname.replace("/", ""); // trigger.bio/thsnd → "thsnd"
+  const path = window.location.pathname.replace("/", ""); // pl. thsnd
 
   if (!path) {
     document.getElementById("content").innerHTML = "<h1>404 - Érvénytelen cím</h1>";
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await fetch(`/api/user/${path}`);
+    const response = await fetch(`https://thsnd-backend.onrender.com/api/user/${path}`);
     if (!response.ok) throw new Error("Nem található");
 
     const user = await response.json();
