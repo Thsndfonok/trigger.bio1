@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Betöltéskor beállítjuk a nevet és a custom URL-t localStorage-ból
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Nem vagy bejelentkezve! Kérlek jelentkezz be.');
+    window.location.href = '/login.html';
+    return;
+  }
+
+  // username és customUrl továbbra is lehet localStorage-ban, vagy kérhetsz a backendből egy külön fetch-sel is
   const username = localStorage.getItem('username') || 'Guest';
   const customUrl = localStorage.getItem('customUrl') || '...';
 
   document.getElementById('welcomeMessage').textContent = `Welcome, ${username} 👋`;
   document.getElementById('customURL').value = `trigger.bio/${customUrl}`;
-
-  const userId = localStorage.getItem('userId');
-  if (!userId) {
-    alert('Nem vagy bejelentkezve vagy nincs userId tárolva!');
-    window.location.href = '/login.html'; 
-    return;
-  }
 
   const profilePicInput = document.getElementById('profilePic');
   const bgVideoInput = document.getElementById('bgVideo');
@@ -24,10 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let bgVideoUrl = '';
   let musicUrl = '';
 
-  // Betöltjük a meglévő profiladatokat
+  // Betöltjük a meglévő profiladatokat JWT token alapján
   async function loadUserData() {
     try {
-      const res = await fetch(`https://thsnd-backend.onrender.com/api/user/${userId}`);
+      const res = await fetch(`https://thsnd-backend.onrender.com/api/user`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (!res.ok) throw new Error('Nem sikerült betölteni a felhasználó adatait');
       const user = await res.json();
 
@@ -37,21 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
       animatedTextInput.value = user.specialText || '';
       previewText.textContent = animatedTextInput.value || 'money is everything';
 
-      // Előnézetek beállítása (feltételezve, hogy vannak ilyen elemek az oldalon)
       if (profileImageUrl) {
         const imgPreview = document.getElementById('profilePicPreview');
-        if(imgPreview) imgPreview.src = profileImageUrl;
+        if (imgPreview) imgPreview.src = profileImageUrl;
       }
       if (bgVideoUrl) {
         const videoPreview = document.getElementById('bgVideoPreview');
-        if(videoPreview) {
+        if (videoPreview) {
           videoPreview.src = bgVideoUrl;
           videoPreview.style.display = 'block';
         }
       }
       if (musicUrl) {
         const musicPlayer = document.getElementById('musicPlayer');
-        if(musicPlayer) {
+        if (musicPlayer) {
           musicPlayer.src = musicUrl;
           musicPlayer.style.display = 'block';
         }
@@ -63,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadUserData();
 
-  // Animált szöveg élő frissítés
   animatedTextInput.addEventListener('input', () => {
     previewText.textContent = animatedTextInput.value || 'money is everything';
   });
@@ -73,23 +75,24 @@ document.addEventListener('DOMContentLoaded', () => {
       saveBtn.disabled = true;
       saveBtn.textContent = 'Mentés...';
 
-      // Fájlok feltöltése, ha van új fájl kiválasztva
       if (profilePicInput.files.length > 0) {
-        profileImageUrl = await uploadFile(userId, profilePicInput.files[0], 'profileImage', 'upload-profile-image');
+        profileImageUrl = await uploadFile(profilePicInput.files[0], 'profileImage', 'upload-profile-image');
       }
 
       if (bgVideoInput.files.length > 0) {
-        bgVideoUrl = await uploadFile(userId, bgVideoInput.files[0], 'bgVideo', 'upload-bg-video'); 
+        bgVideoUrl = await uploadFile(bgVideoInput.files[0], 'bgVideo', 'upload-bg-video');
       }
 
       if (musicUploadInput.files.length > 0) {
-        musicUrl = await uploadFile(userId, musicUploadInput.files[0], 'musicFile', 'upload-music'); 
+        musicUrl = await uploadFile(musicUploadInput.files[0], 'musicFile', 'upload-music');
       }
 
-      // Mentés a profil többi adatával
-      const res = await fetch(`https://thsnd-backend.onrender.com/api/user/${userId}`, {
+      const res = await fetch(`https://thsnd-backend.onrender.com/api/user`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({
           profileImage: profileImageUrl,
           bgVideoUrl,
@@ -110,13 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// A fetch-es feltöltő helper függvény:
-async function uploadFile(userId, file, endpointFieldName, endpoint) {
+// Feltöltő helper JWT tokennel
+async function uploadFile(file, endpointFieldName, endpoint) {
+  const token = localStorage.getItem('token');
   const formData = new FormData();
   formData.append(endpointFieldName, file);
 
-  const res = await fetch(`https://thsnd-backend.onrender.com/api/${endpoint}/${userId}`, {
+  const res = await fetch(`https://thsnd-backend.onrender.com/api/${endpoint}`, {
     method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
     body: formData
   });
 
