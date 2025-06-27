@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const linkUrl = document.getElementById('linkUrl');
   const addLinkBtn = document.getElementById('addLinkBtn');
 
+  // Kijelentkezés gomb
+  const logoutBtn = document.getElementById('logoutBtn');
+
   let profileImageUrl = '';
   let bgVideoUrl = '';
   let musicUrl = '';
@@ -54,8 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
   navLinks.addEventListener('click', () => setActiveSection('links'));
   navPremium.addEventListener('click', () => setActiveSection('premium'));
 
-  // Alapértelmezett szekció betöltéskor
-  setActiveSection('dashboard');
+  // Kijelentkezés
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('customUrl');
+    window.location.href = '/login.html';
+  });
 
   // Betöltjük a meglévő profiladatokat és linkeket
   async function loadUserData() {
@@ -83,12 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (bgVideoUrl && videoPreview) {
         videoPreview.src = bgVideoUrl;
         videoPreview.style.display = 'block';
+      } else if (videoPreview) {
+        videoPreview.style.display = 'none';
       }
 
       const musicPlayer = document.getElementById('musicPlayer');
       if (musicUrl && musicPlayer) {
         musicPlayer.src = musicUrl;
         musicPlayer.style.display = 'block';
+      } else if (musicPlayer) {
+        musicPlayer.style.display = 'none';
       }
     } catch (err) {
       alert('Hiba a profiladatok betöltésekor: ' + err.message);
@@ -113,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       li.innerHTML = `
         <span class="icon">${getIconHTML(link.label)}</span> 
         <a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.label}</a>
-        <button class="removeLinkBtn" data-index="${i}">&times;</button>
+        <button class="removeLinkBtn" data-index="${i}" title="Törlés">&times;</button>
       `;
       linksList.appendChild(li);
     });
@@ -157,6 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Érvénytelen URL!');
       return;
     }
+    if (!platform) {
+      alert('Kérlek válassz platformot!');
+      return;
+    }
 
     // Új link hozzáadása
     links.push({ label: platform, url });
@@ -165,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Űrlap tisztítása
     linkUrl.value = '';
+    linkPlatform.selectedIndex = 0;
   });
 
   // URL validáció egyszerűen
@@ -212,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         musicUrl = await uploadFile(musicUploadInput.files[0], 'musicFile', 'upload-music');
       }
 
-      // A profil mentése a backendnek, a többi adatot is elküldjük, pl. specialText, és linkek (a linkeket már mentettük külön is)
+      // A profil mentése a backendnek, a többi adatot is elküldjük, pl. specialText, és linkek (a linkeket már mentettük külön)
       const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
         method: 'PUT',
         headers: {
@@ -224,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
           bgVideoUrl,
           musicUrl,
           specialText: animatedTextInput.value,
-          links // szinkronban tartás miatt
+          links
         }),
       });
 
@@ -235,9 +252,10 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Hiba történt: ' + err.message);
     } finally {
       saveBtn.disabled = false;
-      saveBtn.textContent = 'Save Changes';
+      saveBtn.textContent = 'Mentés';
     }
   });
+
 });
 
 // Feltöltő helper JWT tokennel
