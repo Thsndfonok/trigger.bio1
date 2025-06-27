@@ -6,10 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('welcomeMessage').textContent = `Welcome, ${username} 👋`;
   document.getElementById('customURL').value = `trigger.bio/${customUrl}`;
 
-  const userId = localStorage.getItem('userId');
+ const userId = localStorage.getItem('userId');
 if (!userId) {
   alert('Nem vagy bejelentkezve vagy nincs userId tárolva!');
-  return; // vagy átirányítás login oldalra
+  // esetleg redirect a login oldalra
+  window.location.href = '/login.html'; 
+  return;
 }
 
 
