@@ -1,11 +1,10 @@
 async function loadProfile() {
-  const pathParts = window.location.pathname.split('/');
-  const customUrl = pathParts[1];
+  const path = window.location.pathname;
+  const pathParts = path.split('/').filter(Boolean); // kiszűri az üres részeket
+  const customUrl = pathParts[0];
 
-  // Ha nincs customUrl vagy az profile.html, akkor ne csináljon semmit
-  if (!customUrl || customUrl.endsWith('.html')) {
-    return;
-  }
+  // Ha nincs customUrl vagy .html végződésű (pl. index.html, profile.html), ne csináljon semmit
+  if (!customUrl || customUrl.endsWith('.html')) return;
 
   try {
     const response = await fetch(`https://thsnd-backend.onrender.com/api/user/${customUrl}`);
