@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('welcomeMessage').textContent = `Welcome, ${username} 👋`;
   document.getElementById('customURL').value = `trigger.bio/${customUrl}`;
 
-  const userId = localStorage.getItem('userId') || 'ITT_A_FELHASZNALO_IDJA'; // vagy más módon dinamikusan
+  const userId = localStorage.getItem('userId');
+  if (!userId) {
+    alert('Nem vagy bejelentkezve vagy nincs userId tárolva!');
+    return;
+  }
 
   const profilePicInput = document.getElementById('profilePic');
   const bgVideoInput = document.getElementById('bgVideo');
@@ -36,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (bgVideoInput.files.length > 0) {
         bgVideoUrl = await uploadFile(userId, bgVideoInput.files[0], 'bgVideo', 'upload-bg-video'); 
-        // Backend végpont szükséges
+        // Backend végpont szükséges még
       }
 
       if (musicUploadInput.files.length > 0) {
         musicUrl = await uploadFile(userId, musicUploadInput.files[0], 'musicFile', 'upload-music'); 
-        // Backend végpont szükséges
+        // Backend végpont szükséges még
       }
 
       // Mentés a profil többi adatával
@@ -68,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// A fetch-es feltöltő helper függvény marad:
+// A fetch-es feltöltő helper függvény:
 async function uploadFile(userId, file, endpointFieldName, endpoint) {
   const formData = new FormData();
   formData.append(endpointFieldName, file);
