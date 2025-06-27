@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('customURL').value = `trigger.bio/${customUrl}`;
 
   const userId = localStorage.getItem('userId');
-  if (!userId) {
-    alert('Nem vagy bejelentkezve vagy nincs userId tárolva!');
-    return;
-  }
+if (!userId) {
+  alert('Nem vagy bejelentkezve vagy nincs userId tárolva!');
+  return; // vagy átirányítás login oldalra
+}
+
 
   const profilePicInput = document.getElementById('profilePic');
   const bgVideoInput = document.getElementById('bgVideo');
