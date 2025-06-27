@@ -6,6 +6,21 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.profile-container {
+  display: flex;
+  flex-direction: column;     /* egymás alá rendezi az elemeket */
+  align-items: center;        /* vízszintesen középre igazít */
+  gap: 20px;                  /* szép távolság az elemek között */
+  max-width: 500px;           /* ne legyen túl széles, szebb lesz */
+  margin: 0 auto;             /* horizontálisan középre */
+  padding: 30px 20px;
+  background: #1e3a8a;        /* háttér, hogy elkülönüljön */
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.5);
+  color: #dbeafe;             /* világos szöveg */
+  user-select: text;
+}
+
 body, html {
   height: 100%;
   background: #0f172a;
@@ -430,19 +445,4 @@ input[type="text"] {
 
 .main-content {
   margin-left: 30px; /* sidebartól kicsit távolabb */
-}
-
-.profile-container {
-  display: flex;
-  flex-direction: column;     /* egymás alá rendezi az elemeket */
-  align-items: center;        /* vízszintesen középre igazít */
-  gap: 20px;                  /* szép távolság az elemek között */
-  max-width: 500px;           /* ne legyen túl széles, szebb lesz */
-  margin: 0 auto;             /* horizontálisan középre */
-  padding: 30px 20px;
-  background: #1e3a8a;        /* háttér, hogy elkülönüljön */
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.5);
-  color: #dbeafe;             /* világos szöveg */
-  user-select: text;
 }
