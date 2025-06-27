@@ -1,92 +1,182 @@
-body {
+/* Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #111;
-  color: #fff;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #121212;
+  color: white;
+}
+
+/* Bal oldali menü */
+nav {
+  width: 220px;
+  background: #1e1e1e;
+  border-right: 1px solid #333;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+  padding-top: 20px;
 }
 
-.dashboard-container {
-  max-width: 600px;
-  width: 100%;
-}
-
-h1 {
+nav h2 {
+  color: #6c63ff;
   text-align: center;
   margin-bottom: 30px;
-  font-size: 2rem;
-  background: linear-gradient(to right, #00f2fe, #4facfe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
 }
 
-.card {
-  background: #1e1e1e;
+nav button {
+  background: none;
+  border: none;
+  color: #bbb;
+  padding: 15px 20px;
+  text-align: left;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  border-left: 4px solid transparent;
+}
+
+nav button:hover,
+nav button.active {
+  background-color: #6c63ff;
+  color: white;
+  border-left-color: #fff;
+}
+
+/* Fő tartalom */
+main {
+  flex: 1;
   padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  background: #181818;
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
-.card label {
-  font-weight: bold;
-  margin-bottom: 5px;
+main h1 {
+  margin-bottom: 20px;
+  color: #6c63ff;
 }
 
-.card input[type="file"],
-.card input[type="text"] {
+/* Form elemek */
+label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input[type="file"],
+input[type="url"],
+input[type="text"],
+select,
+button {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
   background: #2a2a2a;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
+  color: white;
+  transition: background-color 0.3s;
 }
 
-.card input:disabled {
-  opacity: 0.6;
+input[type="file"]:hover,
+input[type="url"]:hover,
+input[type="text"]:hover,
+select:hover,
+button:hover {
+  background-color: #3b3b3b;
 }
 
-#saveBtn {
-  padding: 12px;
-  background: linear-gradient(to right, #00f2fe, #4facfe);
-  border: none;
-  border-radius: 12px;
-  color: #111;
-  font-weight: bold;
+button {
+  margin-top: 15px;
+  background-color: #6c63ff;
+  color: white;
+  font-weight: 700;
   cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Links lista */
+#linksList {
+  margin-top: 15px;
+  list-style: none;
+}
+
+#linksList li {
+  background: #2a2a2a;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#linksList li i {
+  margin-right: 10px;
+  color: #6c63ff;
+  font-size: 20px;
+}
+
+#linksList li button {
+  width: auto;
+  background-color: #ff5555;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+/* Kis ikon és szöveg link hozzáadásnál */
+.link-inputs {
+  display: flex;
+  gap: 10px;
   margin-top: 10px;
-  transition: background 0.3s;
 }
 
-#saveBtn:hover {
-  background: linear-gradient(to right, #4facfe, #00f2fe);
+.link-inputs select,
+.link-inputs input {
+  flex: 1;
 }
 
-#preview {
-  margin-top: 40px;
-  text-align: center;
-}
-
-#previewText {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-top: 10px;
-  background: linear-gradient(to right, #ff416c, #ff4b2b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: glow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from {
-    text-shadow: 0 0 10px #ff4b2b;
+/* Responsive */
+@media (max-width: 600px) {
+  body {
+    flex-direction: column;
   }
-  to {
-    text-shadow: 0 0 20px #ff416c;
+  nav {
+    width: 100%;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid #333;
+  }
+  nav button {
+    flex: 1;
+    text-align: center;
+    border-left: none;
+    border-bottom: 4px solid transparent;
+  }
+  nav button:hover,
+  nav button.active {
+    border-bottom-color: #fff;
+    border-left: none;
+  }
+  main {
+    padding: 15px;
   }
 }
