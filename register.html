@@ -142,12 +142,11 @@
       errorBox.innerHTML = '';
 
       try {
-        const response = await fetch('https://thsnd-backend.onrender.com', {
-
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, email, password, customUrl }),
-        });
+        fetch('https://thsnd-backend.onrender.com/api/register', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ username, email, password, customUrl }),
+});
 
         const data = await response.json();
 
