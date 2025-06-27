@@ -13,12 +13,15 @@
     <div class="card">
       <label for="profilePic">Profile Picture</label>
       <input type="file" accept="image/*" id="profilePic" />
+      <img id="profilePicPreview" alt="Profile Picture Preview" style="max-width: 200px; margin-top: 10px; display: none;" />
 
       <label for="bgVideo">Background Video</label>
       <input type="file" accept="video/*" id="bgVideo" />
+      <video id="bgVideoPreview" controls style="max-width: 400px; margin-top: 10px; display: none;"></video>
 
       <label for="musicUpload">Music Upload</label>
       <input type="file" accept="audio/*" id="musicUpload" />
+      <audio id="musicPlayer" controls style="margin-top: 10px; display: none;"></audio>
 
       <label for="animatedText">Animated Bio Text</label>
       <input type="text" id="animatedText" placeholder="money is everything" />
