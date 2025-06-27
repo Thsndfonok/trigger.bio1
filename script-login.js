@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await res.json();
+console.log('Login response data:', data);
+
 
       if (!res.ok) {
         errorBox.innerHTML = `<p>${data.error || 'Login failed'}</p>`;
