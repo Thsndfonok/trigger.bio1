@@ -57,8 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // JWT token mentése localStorage-be
       localStorage.setItem('token', data.token);
 
-      // Backend visszaküldi a user adatokat, benne az _id-vel
-      localStorage.setItem('userId', data.user._id);
+      // Backend visszaküldi a user adatokat, de userId-t már nem mentünk
       localStorage.setItem('username', data.user.username);
       localStorage.setItem('customUrl', data.user.customUrl);
 
