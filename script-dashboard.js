@@ -54,6 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
   navLinks.addEventListener('click', () => setActiveSection('links'));
   navPremium.addEventListener('click', () => setActiveSection('premium'));
 
+  // Alapértelmezett szekció betöltéskor
+  setActiveSection('dashboard');
+
   // Betöltjük a meglévő profiladatokat és linkeket
   async function loadUserData() {
     try {
@@ -209,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         musicUrl = await uploadFile(musicUploadInput.files[0], 'musicFile', 'upload-music');
       }
 
-      // A profil mentése a backendnek, a többi adatot is elküldjük, pl. specialText, és linkek (a linkeket már mentettük külön)
+      // A profil mentése a backendnek, a többi adatot is elküldjük, pl. specialText, és linkek (a linkeket már mentettük külön is)
       const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
         method: 'PUT',
         headers: {
@@ -221,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
           bgVideoUrl,
           musicUrl,
           specialText: animatedTextInput.value,
-          links // itt is elküldjük, hogy szinkronban legyen, bár a linkeket már külön mentjük is
+          links // szinkronban tartás miatt
         }),
       });
 
@@ -235,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
       saveBtn.textContent = 'Save Changes';
     }
   });
-
 });
 
 // Feltöltő helper JWT tokennel
