@@ -47,13 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await res.json();
-console.log('Login response data:', data);
-
+      console.log('Login response data:', data);
 
       if (!res.ok) {
         errorBox.innerHTML = `<p>${data.error || 'Login failed'}</p>`;
         return;
       }
+
+      // JWT token mentése localStorage-be
+      localStorage.setItem('token', data.token);
 
       // Backend visszaküldi a user adatokat, benne az _id-vel
       localStorage.setItem('userId', data.user._id);
