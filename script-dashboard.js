@@ -6,13 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // username és customUrl továbbra is lehet localStorage-ban, vagy kérhetsz a backendből egy külön fetch-sel is
-  const username = localStorage.getItem('username') || 'Guest';
-  const customUrl = localStorage.getItem('customUrl') || '...';
+  // Elemválasztók
+  const navDashboard = document.getElementById('navDashboard');
+  const navLinks = document.getElementById('navLinks');
+  const navPremium = document.getElementById('navPremium');
 
-  document.getElementById('welcomeMessage').textContent = `Welcome, ${username} 👋`;
-  document.getElementById('customURL').value = `trigger.bio/${customUrl}`;
+  const sectionDashboard = document.getElementById('sectionDashboard');
+  const sectionLinks = document.getElementById('sectionLinks');
+  const sectionPremium = document.getElementById('sectionPremium');
 
+  // Dashboard elemek
   const profilePicInput = document.getElementById('profilePic');
   const bgVideoInput = document.getElementById('bgVideo');
   const musicUploadInput = document.getElementById('musicUpload');
@@ -20,17 +23,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const previewText = document.getElementById('previewText');
   const saveBtn = document.getElementById('saveBtn');
 
+  // Links elemek
+  const linksList = document.getElementById('linksList');
+  const linkPlatform = document.getElementById('linkPlatform');
+  const linkUrl = document.getElementById('linkUrl');
+  const addLinkBtn = document.getElementById('addLinkBtn');
+
   let profileImageUrl = '';
   let bgVideoUrl = '';
   let musicUrl = '';
 
-  // Betöltjük a meglévő profiladatokat JWT token alapján (API endpoint javítva)
+  // Linkek tároló (betöltéskor backendről)
+  let links = [];
+
+  // Menüpontok kezelése
+  function setActiveSection(section) {
+    // aktív menü gomb
+    [navDashboard, navLinks, navPremium].forEach(btn => btn.classList.remove('active'));
+    if (section === 'dashboard') navDashboard.classList.add('active');
+    else if (section === 'links') navLinks.classList.add('active');
+    else if (section === 'premium') navPremium.classList.add('active');
+
+    // megjelenítés
+    sectionDashboard.style.display = section === 'dashboard' ? 'block' : 'none';
+    sectionLinks.style.display = section === 'links' ? 'block' : 'none';
+    sectionPremium.style.display = section === 'premium' ? 'block' : 'none';
+  }
+
+  navDashboard.addEventListener('click', () => setActiveSection('dashboard'));
+  navLinks.addEventListener('click', () => setActiveSection('links'));
+  navPremium.addEventListener('click', () => setActiveSection('premium'));
+
+  // Betöltjük a meglévő profiladatokat és linkeket
   async function loadUserData() {
     try {
       const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!res.ok) throw new Error('Nem sikerült betölteni a felhasználó adatait');
       const user = await res.json();
@@ -41,23 +69,23 @@ document.addEventListener('DOMContentLoaded', () => {
       animatedTextInput.value = user.specialText || '';
       previewText.textContent = animatedTextInput.value || 'money is everything';
 
-      if (profileImageUrl) {
-        const imgPreview = document.getElementById('profilePicPreview');
-        if (imgPreview) imgPreview.src = profileImageUrl;
+      links = user.links || [];
+      renderLinks();
+
+      // Előnézetek
+      const imgPreview = document.getElementById('profilePicPreview');
+      if (profileImageUrl && imgPreview) imgPreview.src = profileImageUrl;
+
+      const videoPreview = document.getElementById('bgVideoPreview');
+      if (bgVideoUrl && videoPreview) {
+        videoPreview.src = bgVideoUrl;
+        videoPreview.style.display = 'block';
       }
-      if (bgVideoUrl) {
-        const videoPreview = document.getElementById('bgVideoPreview');
-        if (videoPreview) {
-          videoPreview.src = bgVideoUrl;
-          videoPreview.style.display = 'block';
-        }
-      }
-      if (musicUrl) {
-        const musicPlayer = document.getElementById('musicPlayer');
-        if (musicPlayer) {
-          musicPlayer.src = musicUrl;
-          musicPlayer.style.display = 'block';
-        }
+
+      const musicPlayer = document.getElementById('musicPlayer');
+      if (musicUrl && musicPlayer) {
+        musicPlayer.src = musicUrl;
+        musicPlayer.style.display = 'block';
       }
     } catch (err) {
       alert('Hiba a profiladatok betöltésekor: ' + err.message);
@@ -70,6 +98,100 @@ document.addEventListener('DOMContentLoaded', () => {
     previewText.textContent = animatedTextInput.value || 'money is everything';
   });
 
+  // Linkek megjelenítése a listában
+  function renderLinks() {
+    linksList.innerHTML = '';
+    if (links.length === 0) {
+      linksList.innerHTML = '<li>Nincsenek linkek hozzáadva.</li>';
+      return;
+    }
+    links.forEach((link, i) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="icon">${getIconHTML(link.label)}</span> 
+        <a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.label}</a>
+        <button class="removeLinkBtn" data-index="${i}">&times;</button>
+      `;
+      linksList.appendChild(li);
+    });
+
+    // Link törlés kezelése
+    document.querySelectorAll('.removeLinkBtn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const index = e.target.dataset.index;
+        links.splice(index, 1);
+        renderLinks();
+        saveLinksToBackend();
+      });
+    });
+  }
+
+  // Ikonok HTML-je platform nevekhez (FontAwesome)
+  function getIconHTML(platform) {
+    switch (platform.toLowerCase()) {
+      case 'instagram': return '<i class="fab fa-instagram"></i>';
+      case 'facebook': return '<i class="fab fa-facebook"></i>';
+      case 'twitter': return '<i class="fab fa-twitter"></i>';
+      case 'youtube': return '<i class="fab fa-youtube"></i>';
+      case 'tiktok': return '<i class="fab fa-tiktok"></i>';
+      case 'linkedin': return '<i class="fab fa-linkedin"></i>';
+      case 'github': return '<i class="fab fa-github"></i>';
+      case 'website': return '<i class="fas fa-globe"></i>';
+      default: return '<i class="fas fa-link"></i>';
+    }
+  }
+
+  // Link hozzáadás
+  addLinkBtn.addEventListener('click', () => {
+    const platform = linkPlatform.value.trim();
+    const url = linkUrl.value.trim();
+
+    if (!url) {
+      alert('Kérlek add meg a link URL-jét!');
+      return;
+    }
+    if (!isValidUrl(url)) {
+      alert('Érvénytelen URL!');
+      return;
+    }
+
+    // Új link hozzáadása
+    links.push({ label: platform, url });
+    renderLinks();
+    saveLinksToBackend();
+
+    // Űrlap tisztítása
+    linkUrl.value = '';
+  });
+
+  // URL validáció egyszerűen
+  function isValidUrl(string) {
+    try {
+      new URL(string);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // Linkek mentése a backendbe (PUT /api/profile)
+  async function saveLinksToBackend() {
+    try {
+      const res = await fetch('https://thsnd-backend.onrender.com/api/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ links })
+      });
+      if (!res.ok) throw new Error('Linkek mentése sikertelen');
+    } catch (err) {
+      alert('Hiba a linkek mentésekor: ' + err.message);
+    }
+  }
+
+  // Mentés gomb működése (profil adatok + fájl feltöltések)
   saveBtn.addEventListener('click', async () => {
     try {
       saveBtn.disabled = true;
@@ -87,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         musicUrl = await uploadFile(musicUploadInput.files[0], 'musicFile', 'upload-music');
       }
 
-      // Javított PUT végpont a profil mentéshez
+      // A profil mentése a backendnek, a többi adatot is elküldjük, pl. specialText, és linkek (a linkeket már mentettük külön)
       const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
         method: 'PUT',
         headers: {
@@ -99,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
           bgVideoUrl,
           musicUrl,
           specialText: animatedTextInput.value,
+          links // itt is elküldjük, hogy szinkronban legyen, bár a linkeket már külön mentjük is
         }),
       });
 
@@ -112,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
       saveBtn.textContent = 'Save Changes';
     }
   });
+
 });
 
 // Feltöltő helper JWT tokennel
