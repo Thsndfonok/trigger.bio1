@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let bgVideoUrl = '';
   let musicUrl = '';
 
-  // Betöltjük a meglévő profiladatokat JWT token alapján
+  // Betöltjük a meglévő profiladatokat JWT token alapján (API endpoint javítva)
   async function loadUserData() {
     try {
-      const res = await fetch(`https://thsnd-backend.onrender.com/api/user`, {
+      const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -87,7 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
         musicUrl = await uploadFile(musicUploadInput.files[0], 'musicFile', 'upload-music');
       }
 
-      const res = await fetch(`https://thsnd-backend.onrender.com/api/user`, {
+      // Javított PUT végpont a profil mentéshez
+      const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
