@@ -1,3 +1,4 @@
+/* Alap reset és body */
 body {
   margin: 0;
   padding: 0;
@@ -8,12 +9,16 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  flex-direction: column; /* hogy a profil tartalom alatta legyen a zenelejátszónak */
+  position: relative; /* hogy a music player fixeden jól pozícionálható legyen */
 }
 
+/* Profil konténer */
 #profile {
   text-align: center;
 }
 
+/* Profilkép */
 #profile img {
   width: 120px;
   height: 120px;
@@ -22,12 +27,83 @@ body {
   margin-bottom: 20px;
 }
 
+/* Címsor */
 h1 {
   font-size: 2rem;
   margin-bottom: 10px;
 }
 
+/* Leírás szöveg */
 p {
   font-size: 1.1rem;
   color: #ccc;
+}
+
+/* Zenelejátszó konténer */
+.music-player {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(255 255 255 / 0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 0 10px rgba(255 255 255 / 0.1);
+  backdrop-filter: blur(10px);
+  user-select: none;
+  transition: background 0.3s ease;
+  z-index: 1000;
+}
+.music-player:hover {
+  background: rgba(255 255 255 / 0.15);
+  box-shadow: 0 0 15px rgba(255 255 255 / 0.2);
+}
+
+/* Play/pause gomb */
+.play-pause-btn {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #fff;
+  transition: color 0.3s ease;
+  border: none;
+  background: transparent;
+}
+.play-pause-btn:hover {
+  color: #1db954; /* Spotify zöld */
+}
+
+/* Hangerő csúszka */
+.volume-slider {
+  -webkit-appearance: none;
+  width: 120px;
+  height: 6px;
+  border-radius: 3px;
+  background: #444;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.volume-slider:hover {
+  background: #666;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1db954;
+  cursor: pointer;
+  box-shadow: 0 0 5px #1db954;
+  transition: background 0.3s ease;
+}
+.volume-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1db954;
+  cursor: pointer;
+  box-shadow: 0 0 5px #1db954;
+  transition: background 0.3s ease;
 }
