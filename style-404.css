@@ -140,17 +140,15 @@ p {
   transition: background 0.3s ease;
 }
 
-audio#profileAudio {
+#audioSource {
+  display: none;
+}
+#audioSource + audio,
+#audioSource {
   display: none !important;
 }
 
-audio {
+#audioSource,
+#profileAudio {
   display: none !important;
-  visibility: hidden !important;
-  position: fixed !important;
-  left: -9999px !important;
-  width: 0 !important;
-  height: 0 !important;
-  overflow: hidden !important;
-  pointer-events: none !important;
 }
