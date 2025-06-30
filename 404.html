@@ -2,8 +2,8 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Profil betöltése</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil betöltése...</title>
   <link rel="stylesheet" href="style-404.css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 </head>
@@ -12,7 +12,7 @@
   <!-- Háttérvideó teljes képernyős -->
   <video id="bgVideo" autoplay muted loop playsinline></video>
 
-  <!-- Profil tartalom dinamikusan töltve -->
+  <!-- Profil tartalom -->
   <div id="content">
     <img id="profile-pic" alt="Profilkép" />
     <h1 id="profile-name"></h1>
@@ -39,55 +39,7 @@
   <!-- Rejtett audio elem, amit a fenti panel irányít -->
   <audio id="profileAudio" loop></audio>
 
-  <script>
-    const audio = document.getElementById('profileAudio');
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const volumeSlider = document.getElementById('volumeSlider');
-    const playIcon = '<i class="fa-solid fa-play"></i>';
-    const pauseIcon = '<i class="fa-solid fa-pause"></i>';
-
-    // Betöltjük a profildátumokat a backendről
-    async function loadProfile() {
-      try {
-        const path = window.location.pathname.replace("/", "");
-        const res = await fetch(`https://thsnd-backend.onrender.com/api/user/${path}`);
-        if (!res.ok) throw new Error('Nem sikerült betölteni a profilt');
-
-        const data = await res.json();
-
-        document.title = `${data.username} profilja`;
-        document.getElementById('profile-pic').src = data.profileImage || '';
-        document.getElementById('profile-name').textContent = data.username || '';
-        document.getElementById('profile-description').textContent = data.bio || '';
-
-        document.getElementById('bgVideo').src = data.bgVideoUrl || '';
-
-        audio.src = data.musicUrl || '';
-        audio.load();
-        audio.volume = volumeSlider.value;
-
-      } catch (err) {
-        console.error(err);
-        document.getElementById('content').textContent = 'Hiba történt a profil betöltésekor.';
-      }
-    }
-
-    playPauseBtn.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
-        playPauseBtn.innerHTML = pauseIcon;
-      } else {
-        audio.pause();
-        playPauseBtn.innerHTML = playIcon;
-      }
-    });
-
-    volumeSlider.addEventListener('input', (e) => {
-      audio.volume = e.target.value;
-    });
-
-    loadProfile();
-  </script>
+  <script src="script-404.js"></script>
 
 </body>
 </html>
