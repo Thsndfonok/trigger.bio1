@@ -1,4 +1,3 @@
-/* Alap reset és body */
 body {
   margin: 0;
   padding: 0;
@@ -16,6 +15,9 @@ body {
 /* Profil konténer */
 #profile {
   text-align: center;
+  position: relative;
+  z-index: 10;
+  padding-top: 120px; /* hely a fixed zenevezérlőnek */
 }
 
 /* Profilkép */
@@ -37,6 +39,18 @@ h1 {
 p {
   font-size: 1.1rem;
   color: #ccc;
+}
+
+/* Háttérvideó teljes hátteres megjelenítés */
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Zenelejátszó konténer */
