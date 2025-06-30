@@ -12,6 +12,9 @@
 </head>
 <body>
 
+  <!-- Háttérvideó teljes képernyős -->
+  <video id="bgVideo" autoplay muted loop playsinline></video>
+
   <!-- Profil tartalom dinamikusan töltve -->
   <div id="content">
     <img id="profile-pic" alt="Profilkép" />
@@ -77,6 +80,7 @@
         document.getElementById('profile-name').textContent = data.name || '';
         document.getElementById('profile-description').textContent = data.description || '';
         document.getElementById('audioSource').src = data.musicUrl || '';
+        document.getElementById('bgVideo').src = data.bgVideoUrl || '';
         audio.load();
       } catch (err) {
         console.error(err);
