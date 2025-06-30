@@ -41,13 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Menüpontok kezelése
   function setActiveSection(section) {
-    // aktív menü gomb
     [navDashboard, navLinks, navPremium].forEach(btn => btn.classList.remove('active'));
     if (section === 'dashboard') navDashboard.classList.add('active');
     else if (section === 'links') navLinks.classList.add('active');
     else if (section === 'premium') navPremium.classList.add('active');
 
-    // megjelenítés
     sectionDashboard.style.display = section === 'dashboard' ? 'block' : 'none';
     sectionLinks.style.display = section === 'links' ? 'block' : 'none';
     sectionPremium.style.display = section === 'premium' ? 'block' : 'none';
@@ -65,13 +63,36 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = '/login.html';
   });
 
-  // Betöltjük a meglévő profiladatokat és linkeket
+  // Feltöltő helper JWT tokennel
+  async function uploadFile(file, endpointFieldName, endpoint) {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    formData.append(endpointFieldName, file);
+
+    const res = await fetch(`https://thsnd-backend.onrender.com/api/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      body: formData
+    });
+
+    if (!res.ok) throw new Error(`Feltöltés sikertelen: ${endpoint}`);
+
+    const data = await res.json();
+    return data.url;
+  }
+
+  // Felhasználói adatok betöltése backendről
   async function loadUserData() {
     try {
-      const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      const res = await fetch('https://thsnd-backend.onrender.com/api/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
-      if (!res.ok) throw new Error('Nem sikerült betölteni a felhasználó adatait');
+      if (!res.ok) throw new Error('Felhasználói adatok betöltése sikertelen');
+
       const user = await res.json();
 
       profileImageUrl = user.profileImage || '';
@@ -83,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       links = user.links || [];
       renderLinks();
 
-      // Előnézetek
+      // Előnézetek frissítése
       const imgPreview = document.getElementById('profilePicPreview');
       if (profileImageUrl && imgPreview) imgPreview.src = profileImageUrl;
 
@@ -109,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadUserData();
 
+  // Animált szöveg élő előnézete
   animatedTextInput.addEventListener('input', () => {
     previewText.textContent = animatedTextInput.value || 'money is everything';
   });
@@ -229,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         musicUrl = await uploadFile(musicUploadInput.files[0], 'musicFile', 'upload-music');
       }
 
-      // A profil mentése a backendnek, a többi adatot is elküldjük, pl. specialText, és linkek (a linkeket már mentettük külön)
+      // Profiladatok mentése
       const res = await fetch(`https://thsnd-backend.onrender.com/api/profile`, {
         method: 'PUT',
         headers: {
@@ -257,23 +279,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
-
-// Feltöltő helper JWT tokennel
-async function uploadFile(file, endpointFieldName, endpoint) {
-  const token = localStorage.getItem('token');
-  const formData = new FormData();
-  formData.append(endpointFieldName, file);
-
-  const res = await fetch(`https://thsnd-backend.onrender.com/api/${endpoint}`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    body: formData
-  });
-
-  if (!res.ok) throw new Error(`Feltöltés sikertelen: ${endpoint}`);
-
-  const data = await res.json();
-  return data.url;
-}
