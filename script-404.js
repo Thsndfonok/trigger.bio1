@@ -19,6 +19,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         <img src="${user.profileImage || '/default-profile.png'}" alt="Profilkép">
         <h1>${user.username}</h1>
         <p>${user.bio || 'Nincs megadva bemutatkozás.'}</p>
+        
+        <video id="bgVideo" controls autoplay muted loop style="width: 100%; max-height: 400px; display: ${user.bgVideoUrl ? 'block' : 'none'};">
+          <source src="${user.bgVideoUrl || ''}" type="video/mp4">
+          A böngésződ nem támogatja a videó lejátszást.
+        </video>
+
+        <audio id="musicPlayer" controls style="width: 100%; margin-top: 10px; display: ${user.musicUrl ? 'block' : 'none'};">
+          <source src="${user.musicUrl || ''}" type="audio/mpeg">
+          A böngésződ nem támogatja a hangfájl lejátszást.
+        </audio>
       </div>
     `;
   } catch (err) {
