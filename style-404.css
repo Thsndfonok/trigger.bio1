@@ -1,40 +1,40 @@
+/* Alap reset és body */
 body {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", sans-serif;
   background-color: #121212;
   color: white;
-  height: 100vh;
-  overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
-  position: relative;
+  justify-content: center;
+  min-height: 100vh; /* módosítva görgethetőség miatt */
+  flex-direction: column; /* hogy a profil tartalom alatta legyen a zenelejátszónak */
+  position: relative; /* hogy a music player fixeden jól pozícionálható legyen */
+  overflow-x: hidden;
 }
 
-/* Háttérvideó teljes képernyős */
-#bgVideo {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Profil tartalom */
+/* A tartalom konténer legyen a videó és a zenevezérlő fölött */
 #content {
   position: relative;
   z-index: 10;
-  text-align: center;
-  max-width: 600px;
   padding: 20px;
+  max-width: 600px;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+/* Profil konténer */
+#profile {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  padding-top: 120px; /* hely a fixed zenevezérlőnek */
+  margin-top: 60px; /* kis távolság a tetejétől, hogy ne takarja a music player */
 }
 
 /* Profilkép */
-#profile-pic {
+#profile img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -43,15 +43,32 @@ body {
 }
 
 /* Címsor */
-#profile-name {
+h1 {
   font-size: 2rem;
   margin-bottom: 10px;
 }
 
-/* Leírás */
-#profile-description {
+/* Leírás szöveg */
+p {
   font-size: 1.1rem;
   color: #ccc;
+}
+
+/* Háttérvideó teljes hátteres megjelenítés */
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Rejtsd el az audio elemet, mert a custom vezérlő van */
+#profileAudio {
+  display: none;
 }
 
 /* Zenelejátszó konténer */
@@ -70,38 +87,41 @@ body {
   user-select: none;
   transition: background 0.3s ease;
   z-index: 1000;
-  cursor: pointer;
 }
 .music-player:hover {
   background: rgba(255 255 255 / 0.15);
   box-shadow: 0 0 15px rgba(255 255 255 / 0.2);
 }
 
-/* Lejátszás/Szünet gomb */
+/* Play/pause gomb */
 .play-pause-btn {
+  cursor: pointer;
   font-size: 1.5rem;
   color: #fff;
+  transition: color 0.3s ease;
   border: none;
   background: transparent;
 }
 .play-pause-btn:hover {
-  color: #1db954;
+  color: #1db954; /* Spotify zöld */
 }
 
 /* Hangerő csúszka */
 .volume-slider {
+  -webkit-appearance: none;
   width: 120px;
   height: 6px;
   border-radius: 3px;
   background: #444;
   cursor: pointer;
-  -webkit-appearance: none;
+  transition: background 0.3s ease;
 }
 .volume-slider:hover {
   background: #666;
 }
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -120,7 +140,6 @@ body {
   transition: background 0.3s ease;
 }
 
-/* Rejtett natív audio elem */
-#audio {
+audio#profileAudio {
   display: none !important;
 }
