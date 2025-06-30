@@ -22,6 +22,8 @@ body {
   max-width: 600px;
   width: 90%;
   box-sizing: border-box;
+  background: rgba(18, 18, 18, 0.7); /* Átlátszó sötét háttér a jobb olvashatósághoz */
+  border-radius: 12px;
 }
 
 /* Profil konténer */
@@ -29,8 +31,8 @@ body {
   text-align: center;
   position: relative;
   z-index: 10;
-  padding-top: 120px; /* hely a fixed zenevezérlőnek */
-  margin-top: 60px; /* kis távolság a tetejétől, hogy ne takarja a music player */
+  padding-top: 60px; /* hely a fixed zenevezérlőnek */
+  margin-top: 20px; /* kis távolság a tetejétől, hogy ne takarja a music player */
 }
 
 /* Profilkép */
@@ -40,18 +42,23 @@ body {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 /* Címsor */
 h1 {
   font-size: 2rem;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 /* Leírás szöveg */
 p {
   font-size: 1.1rem;
   color: #ccc;
+  white-space: pre-line; /* Többsoros szöveg esetén */
+  margin-top: 10px;
+  line-height: 1.4;
 }
 
 /* Háttérvideó teljes hátteres megjelenítés */
@@ -68,7 +75,7 @@ p {
 
 /* Rejtsd el az audio elemet, mert a custom vezérlő van */
 #profileAudio {
-  display: none;
+  display: none !important;
 }
 
 /* Zenelejátszó konténer */
@@ -138,8 +145,4 @@ p {
   cursor: pointer;
   box-shadow: 0 0 5px #1db954;
   transition: background 0.3s ease;
-}
-
-audio#profileAudio {
-  display: none !important;
 }
