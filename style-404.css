@@ -126,13 +126,3 @@ body {
   box-shadow: 0 0 5px #1db954;
   transition: background 0.3s ease;
 }
-
-audio#profileAudio {
-  display: none !important;
-  visibility: hidden;
-  width: 0 !important;
-  height: 0 !important;
-  overflow: hidden;
-  position: fixed; /* vagy absolute */
-  left: -9999px;
-}
