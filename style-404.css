@@ -129,4 +129,10 @@ body {
 
 audio#profileAudio {
   display: none !important;
+  visibility: hidden;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden;
+  position: fixed; /* vagy absolute */
+  left: -9999px;
 }
